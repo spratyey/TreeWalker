@@ -3,35 +3,6 @@
 #include <stdlib.h>
 #include "PriorityQueue.h"
 int size=-1;
-
-
-
-
-
-void siftDown(ptr heap, long long int size, long long int index) 
-{
-	/*
-	long long int w = 2 * index + 1;
-  	while (w < size) 
-  	{
-	  	if (w + 1 < size) 
-	  	{
-			if (heap[w + 1] > heap[w])
-				w++;
-		}
-		if (heap[index] > heap[w]) 
-			return;
-		
-		swap(&heap[index], &heap[w]);
-		index = w;
-		w = 2 * index + 1;
-	}
-	*/
-}
-
-
-
-
 void heapify(ptr heap, long long int size) 
 {
 	/*
@@ -97,6 +68,14 @@ int par(int index)
 	else 
 		return -1;
 }
+int lef(int index)
+{
+    return (2 * index) + 1;
+}
+int ri(int index)
+{
+    return lef(index) + 1;
+}
 void swap(ptr* a, ptr* b)
 {
 	ptr tmp;
@@ -113,6 +92,22 @@ void siftUp(ptr* heap, int index)
         index = par(index);
 	}
 }
+void siftDown(ptr* heap, int size,int index) 
+{
+	int maxele = index;
+    int left = lef(index);
+ 	int right = ri(index);
+    if (left <= size && node_comparator(heap[left] , heap[maxele])!=0) 
+        maxele = left;   
+    if (right <= size && node_comparator(heap[right] , heap[maxele])!=0) 
+		maxele = right;
+   
+    if (index != maxele) 
+	{
+        swap(&heap[index], &heap[maxele]);
+        siftDown(heap,size,maxele);
+    }	
+}
 
 ptr* createPQ(int capacity) 
 {
@@ -126,6 +121,18 @@ void push(ptr* heap, ptr newnode)
 	heap[++size]= newnode;
 	siftUp(heap,size);
 }
+ptr pop(ptr* heap)
+{
+	if(heap[0]==NULL)
+		return NULL;
 
-
+	ptr temp = heap[0];
+	heap[0] = heap[size--];
+    siftDown(heap,size,0);
+    return temp;
+}
+ptr peek(ptr* heap)
+{
+	return heap[0];
+}
 

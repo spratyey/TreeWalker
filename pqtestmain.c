@@ -27,13 +27,20 @@ int main()
 	{
 		int statenum, val, parentnum;
 		scanf(" %d %d %d", &statenum, &val, &parentnum);
-		printf("Read %d %d %d\n", statenum, val, parentnum);
+		//printf("Read %d %d %d\n", statenum, val, parentnum);
 		push(pq, makenode(statenum, val, parentnum));
 	}
 	printf("\nPQ:\n");
 	for (int i = 0; i < noofele; i++)
 	{
-		printf("%d\t", pq[i]->value);
+		printf("%d ", pq[i]->value);
+	}
+	
+	printf("\nPopping:\n");
+	for (int i = 0; i < noofele; i++)
+	{
+		ptr temp = pop(pq);
+		printf("%d ", temp->value);
 	}
 	printf("\n");
 	return 0;
