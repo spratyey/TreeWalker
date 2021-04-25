@@ -19,7 +19,8 @@
     For now, write the main function and input the nodes, fill the values of number_of_children, children
     (in the struct) and try to write the priority queue using the comparator.
 */
-
+#ifndef NODE_H
+#define NODE_H
 #include <stdio.h>
 
 typedef struct node
@@ -29,18 +30,18 @@ typedef struct node
     int parent;
 
     // You (as a developer) can add any extra information here [Will not be touched by user]
-    int depth, seen_time, number_of_children;
-    node *children[10000];
+    //int depth, seen_time, number_of_children;
+    //node *children[10000];
 } node;
+typedef struct node* ptr;
+int node_comparator(node *a, node *b);
 
-bool node_comparator(node *a, node *b)
-{
-    // User puts in the node comparator here
-    return a->value < b->value; // A sample comparator
-}
-
+/*
 void input_node(node *a)
 {
     // inputs the information of one node. Use this in a loop to input all the nodes.
     scanf("%d %d %d", &(a->state_number), &(a->value), &(a->parent));
 }
+*/
+#endif
+
