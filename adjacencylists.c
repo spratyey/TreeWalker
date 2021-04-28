@@ -1,13 +1,15 @@
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 #include "PriorityQueue.h"
+
+// Create a node
 struct node *createNode(int statenum, int val, int parentnum)
 {
     struct node *newNode = malloc(sizeof(struct node));
     newNode->state_number = statenum;
     newNode->value = val;
     newNode->parent = parentnum;
-    newNode->next = NULL;
+    //newNode->next = NULL;
     newNode->seen_time=0;
     return newNode;
 }
@@ -28,7 +30,7 @@ void printAdjacencyList(struct node *AdjacencyListArray[],int maxnode)
         printf("\n");
     }
 }
-void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
+void PushInAdjacencyListarrray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
     struct node *newNode = createNode(statenum, val, parentnum);
     if (parentnum >= 0)
@@ -50,9 +52,8 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr* heap, int maxnode)
     ptr popped_node;
     int tstamp = 1;
     push(heap, T);
-            printf("[statenum=%d,val=%d,parentnum =%d]\n", heap[0]->state_number,heap[0]->value,heap[0]->parent);
-
     T->seen_time = tstamp;
+    printf("ki[statenum=%d,val=%d,parentnum =%d]\n", heap[0]->state_number,heap[0]->value,heap[0]->parent);
     tstamp++;
     int i;
     for(i = 0; i < maxnode; i++) //maxnode is total number of nodes in tree
@@ -68,38 +69,4 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr* heap, int maxnode)
             tstamp++;
         }
     }
-}
-ptr makenode(int statenum, int val, int parentnum)
-{
-	ptr mynode = (ptr)malloc(sizeof(node));
-	mynode->state_number = statenum;
-	mynode->value = val;
-	mynode->parent = parentnum;
-	return mynode;
-}
-
-int main()
-{
-
-	int noofele;
-	scanf("%d", &noofele);
-
-	ptr *pq = createPQ(noofele + 10);
-	struct node *AdjacencyListArray[noofele];
-	int VisitedArray[noofele];
-	int maxnode;
-	for (int i = 1; i <= maxnode; i++)
-	{
-		AdjacencyListArray[i] = NULL;
-	}
-
-	for (int i = 0; i < noofele; i++)
-	{
-		int statenum, val, parentnum;
-		scanf(" %d %d %d", &statenum, &val, &parentnum);
-		PushInAdjacencyListarray(AdjacencyListArray, statenum, val, parentnum);
-	}
-    printAdjacencyList(AdjacencyListArray,noofele);
-	//pushListToPQ(AdjacencyListArray,pq,noofele);
-	return 0;
 }
