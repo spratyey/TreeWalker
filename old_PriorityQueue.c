@@ -37,8 +37,10 @@ void deleteByPos(ptr heap, long long int index, long long int *size)
 	assert(index < *size);
 	heap[index] = heap[0] + 1; // store a value greater than max value
 	siftUp(heap, *size, index);
+
 	swap(&heap[0], &heap[*size - 1]);
 	(*size)--;
+
 	siftDown(heap, *size, 0);
 }
 */
@@ -49,7 +51,9 @@ void updateByPos(ptr heap, long long int index, node UpdatedP)//, long long int 
 	/*	assert(index < size);
 	heap[index] = heap[0] + 1; // store a value greater than max value
 	siftUp(heap, size, index);
+
 	heap[0] = UpdatedP;
+
 	siftDown(heap, size, 0);
 	*/
 }
@@ -151,3 +155,4 @@ void deletePQ(ptr* heap)
 	__SIZE=-1;
 	free(heap);
 }
+

@@ -22,23 +22,17 @@
 #ifndef NODE_H
 #define NODE_H
 #include <stdio.h>
-#include<stdlib.h>
-#include<assert.h>
+
 typedef struct node
 {
     int state_number;
     int value;
     int parent;
-    int seen_time;
+
     // You (as a developer) can add any extra information here [Will not be touched by user]
     //int depth, seen_time, number_of_children;
     //node *children[10000];
-    struct node* next;
 } node;
-struct Graph
-{
-    struct node * head;
-};
 typedef struct node* ptr;
 int node_comparator(node *a, node *b);
 
