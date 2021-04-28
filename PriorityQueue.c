@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "PriorityQueue.h"
-int size=-1;
-void heapify(ptr heap, long long int size) 
+int __SIZE=-1,__CAP;
+void heapify(ptr heap)//, long long int __SIZE) 
 {
 	/*
 	for (long long int i = (size - 2) / 2; i >= 0; i--) 
@@ -11,7 +11,7 @@ void heapify(ptr heap, long long int size)
 		*/
 }
 
-void deleteByValue(ptr heap, node Todelete, long long int *size) 
+void deleteByValue(ptr heap, node Todelete)//, long long int __SIZE) 
 {
 	/*
 	int flag = 0;
@@ -46,7 +46,7 @@ void deleteByPos(ptr heap, long long int index, long long int *size)
 */
 
 /*This function updates priority/value by passing position in heap*/
-void updateByPos(ptr heap, long long int index, node UpdatedP, long long int size) 
+void updateByPos(ptr heap, long long int index, node UpdatedP)//, long long int size) 
 {
 	/*	assert(index < size);
 	heap[index] = heap[0] + 1; // store a value greater than max value
@@ -57,9 +57,6 @@ void updateByPos(ptr heap, long long int index, node UpdatedP, long long int siz
 	siftDown(heap, size, 0);
 	*/
 }
-
-
-
 //refined from here on below
 int par(int index) 
 {
@@ -92,47 +89,70 @@ void siftUp(ptr* heap, int index)
         index = par(index);
 	}
 }
-void siftDown(ptr* heap, int size,int index) 
+void siftDown(ptr* heap,int index) 
 {
 	int maxele = index;
     int left = lef(index);
  	int right = ri(index);
-    if (left <= size && node_comparator(heap[left] , heap[maxele])!=0) 
+    if (left <= __SIZE && node_comparator(heap[left] , heap[maxele])!=0) 
         maxele = left;   
-    if (right <= size && node_comparator(heap[right] , heap[maxele])!=0) 
+    if (right <= __SIZE && node_comparator(heap[right] , heap[maxele])!=0) 
 		maxele = right;
    
     if (index != maxele) 
 	{
         swap(&heap[index], &heap[maxele]);
-        siftDown(heap,size,maxele);
+        siftDown(heap,maxele);
     }	
 }
 
 ptr* createPQ(int capacity) 
 {
+	__CAP=capacity;
 	ptr* heap = (ptr*)malloc(sizeof(ptr)*capacity);
   	assert(heap != NULL);
 	return heap;
 }
-
+/*Add element to PQ*/
 void push(ptr* heap, ptr newnode) 
 {
-	heap[++size]= newnode;
-	siftUp(heap,size);
+	assert(__SIZE<__CAP-1);
+	
+	heap[++__SIZE]= newnode;
+	siftUp(heap,__SIZE);
 }
+/*Pop the most priority elem*/
 ptr pop(ptr* heap)
 {
 	if(heap[0]==NULL)
 		return NULL;
 
 	ptr temp = heap[0];
-	heap[0] = heap[size--];
-    siftDown(heap,size,0);
+	heap[0] = heap[__SIZE--];
+    siftDown(heap,0);
     return temp;
 }
+/*Returns highest priority element*/
 ptr peek(ptr* heap)
 {
 	return heap[0];
+}
+/*To check if PQ is empty*/
+int isEmpty()
+{
+	return (__SIZE==-1);
+}
+void deletePQ(ptr* heap)
+{
+	assert(heap!=NULL);
+	// for(int i=0;i<__SIZE;i++)
+	// {
+	// 	if(heap[i]!=NULL)
+	// 	{
+	// 		free(heap[i]);
+	// 	}
+	// }
+	__SIZE=-1;
+	free(heap);
 }
 

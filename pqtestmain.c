@@ -41,7 +41,10 @@ int main()
 	{
 		ptr temp = pop(pq);
 		printf("%d ", temp->value);
+		free(temp);
 	}
 	printf("\n");
+
+	deletePQ(pq);
 	return 0;
 }

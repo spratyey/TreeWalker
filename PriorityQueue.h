@@ -8,7 +8,9 @@ ptr* createPQ(int capacity);
 void push(ptr *heap, ptr newnode);
 int lef(int index);
 int ri(int index);
-void siftDown(ptr *heap, int size, int index);
+void siftDown(ptr *heap, int index);
 ptr pop(ptr *heap);
 ptr peek(ptr *heap);
+void deletePQ(ptr* heap);
+int isEmpty();
 #endif
