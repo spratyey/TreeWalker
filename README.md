@@ -12,7 +12,7 @@ Data Structures and Algorithms Term Project
 &nbsp;  
 ## Implemented Till Now:  
 - Breadth-First Search
-- Depth First Search
+- Depth-First Search
 - Greedy search (favoring lesser/greater value) 
 ## To-Do:  
 - Accepting search mode via command line flags  
