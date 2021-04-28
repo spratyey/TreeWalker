@@ -35,13 +35,9 @@ typedef struct node
     //node *children[10000];
     struct node* next;
 } node;
-struct Graph
-{
-    struct node * head;
-};
+
 typedef struct node* ptr;
 int node_comparator(node *a, node *b);
-
 /*
 void input_node(node *a)
 {
@@ -50,4 +46,3 @@ void input_node(node *a)
 }
 */
 #endif
-

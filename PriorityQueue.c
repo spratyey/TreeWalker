@@ -3,57 +3,8 @@
 #include <stdlib.h>
 #include "PriorityQueue.h"
 int __SIZE=-1,__CAP;
-void heapify(ptr heap)//, long long int __SIZE) 
-{
-	/*
-	for (long long int i = (size - 2) / 2; i >= 0; i--) 
-  	  siftDown(heap, size, i);
-		*/
-}
 
-void deleteByValue(ptr heap, node Todelete)//, long long int __SIZE) 
-{
-	/*
-	int flag = 0;
-	long long int i;
-	for (i = 0; i < *size; i++) 
-	{
-		if (heap[i] == Todelete) 
-		{
-			swap(&heap[i], &heap[*size - 1]);
-			(*size) -= 1;
-			flag = 1;
-			break;
-		}
-	}
-	if (flag) 
-		siftDown(heap, *size, i);
-	*/
-}
-
-/*
-void deleteByPos(ptr heap, long long int index, long long int *size) 
-{
-	assert(index < *size);
-	heap[index] = heap[0] + 1; // store a value greater than max value
-	siftUp(heap, *size, index);
-	swap(&heap[0], &heap[*size - 1]);
-	(*size)--;
-	siftDown(heap, *size, 0);
-}
-*/
-
-/*This function updates priority/value by passing position in heap*/
-void updateByPos(ptr heap, long long int index, node UpdatedP)//, long long int size) 
-{
-	/*	assert(index < size);
-	heap[index] = heap[0] + 1; // store a value greater than max value
-	siftUp(heap, size, index);
-	heap[0] = UpdatedP;
-	siftDown(heap, size, 0);
-	*/
-}
-//refined from here on below
+//returns index of parent of arg
 int par(int index) 
 {
 	if (index != 0)
@@ -61,14 +12,20 @@ int par(int index)
 	else 
 		return -1;
 }
+
+//returns index of left child of arg
 int lef(int index)
 {
     return (2 * index) + 1;
 }
+
+//returns index of right child of arg
 int ri(int index)
 {
     return lef(index) + 1;
 }
+
+//swaps two nodes in the heap
 void swap(ptr* a, ptr* b)
 {
 	ptr tmp;
@@ -76,15 +33,16 @@ void swap(ptr* a, ptr* b)
 	*a = *b;
 	*b = tmp;
 }
+//heapify while pushing
 void siftUp(ptr* heap, int index) 
 {
-	//assert(index < size);
 	while(index>0 && node_comparator(heap[index], heap[par(index)])!=0)
 	{
         swap(&heap[par(index)], &heap[index]);
         index = par(index);
 	}
 }
+//heapify while popping
 void siftDown(ptr* heap,int index) 
 {
 	int maxele = index;
@@ -94,14 +52,13 @@ void siftDown(ptr* heap,int index)
         maxele = left;   
     if (right <= __SIZE && node_comparator(heap[right] , heap[maxele])!=0) 
 		maxele = right;
-   
     if (index != maxele) 
 	{
         swap(&heap[index], &heap[maxele]);
         siftDown(heap,maxele);
     }	
 }
-
+//create a pq
 ptr* createPQ(int capacity) 
 {
 	__CAP=capacity;
@@ -109,7 +66,8 @@ ptr* createPQ(int capacity)
   	assert(heap != NULL);
 	return heap;
 }
-/*Add element to PQ*/
+
+//Adds element to PQ
 void push(ptr* heap, ptr newnode) 
 {
 	assert(__SIZE<__CAP-1);
@@ -117,7 +75,8 @@ void push(ptr* heap, ptr newnode)
 	heap[++__SIZE]= newnode;
 	siftUp(heap,__SIZE);
 }
-/*Pop the most priority elem*/
+
+//pops the element with the highest priority
 ptr pop(ptr* heap)
 {
 	if(heap[0]==NULL)
@@ -128,26 +87,20 @@ ptr pop(ptr* heap)
     siftDown(heap,0);
     return temp;
 }
-/*Returns highest priority element*/
+//Returns highest priority element
 ptr peek(ptr* heap)
 {
 	return heap[0];
 }
-/*To check if PQ is empty*/
+//To check if PQ is empty
 int isEmpty()
 {
 	return (__SIZE==-1);
 }
+//frees malloc'd memory for heap. Note: individual nodes are not freed here as they hve been malloc'd by the adjacency list.the heap just stores pointers to those nodes. on freeing the heap, those addresses are not lost as they are still present in the adjacency list.
 void deletePQ(ptr* heap)
 {
 	assert(heap!=NULL);
-	// for(int i=0;i<__SIZE;i++)
-	// {
-	// 	if(heap[i]!=NULL)
-	// 	{
-	// 		free(heap[i]);
-	// 	}
-	// }
 	__SIZE=-1;
 	free(heap);
 }
