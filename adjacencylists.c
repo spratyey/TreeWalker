@@ -30,7 +30,7 @@ void printAdjacencyList(struct node *AdjacencyListArray[],int maxnode)
         printf("\n");
     }
 }
-void PushInAdjacencyListarrray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
+void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
     struct node *newNode = createNode(statenum, val, parentnum);
     if (parentnum >= 0)
@@ -53,7 +53,6 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr* heap, int maxnode)
     int tstamp = 1;
     push(heap, T);
     T->seen_time = tstamp;
-    printf("ki[statenum=%d,val=%d,parentnum =%d]\n", heap[0]->state_number,heap[0]->value,heap[0]->parent);
     tstamp++;
     int i;
     for(i = 0; i < maxnode; i++) //maxnode is total number of nodes in tree
