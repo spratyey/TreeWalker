@@ -7,6 +7,7 @@ struct node *createNode(int statenum, int val, int parentnum)
     newNode->parent = parentnum;
     newNode->next = NULL;
     newNode->seen_time=0;
+    if
     return newNode;
 }
 
@@ -28,6 +29,7 @@ void printAdjacencyList(struct node *AdjacencyListArray[],int maxnode)
 		*/
     }
 }
+
 void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
     struct node *newNode = createNode(statenum, val, parentnum);
@@ -75,6 +77,9 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr* heap, int maxnode)
     for(i = 0; i < maxnode; i++) //maxnode is total number of nodes in tree
     {
         popped_node = pop(heap);
+        max[count] = MaxDepth(popped_node, max[count-1]);
+        avg[count] = AvgDepth(popped_node);
+        count++;
         printf("[statenum=%d,val=%d,parentnum =%d,seentime=%d]\n", popped_node->state_number + 1,popped_node->value,popped_node->parent + 1,popped_node->seen_time);
         T = AdjacencyListArray[(popped_node->state_number)];
         while(T->next != NULL)
@@ -86,3 +91,5 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr* heap, int maxnode)
         }
     }
 }
+
+

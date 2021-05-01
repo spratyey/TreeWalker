@@ -31,7 +31,8 @@ typedef struct node
     int parent;
     int seen_time;
     // You (as a developer) can add any extra information here [Will not be touched by user]
-    //int depth, seen_time, number_of_children;
+    int depth, number_of_children;
+    // Branching factor = average number of children of each node other than leaves.
     //node *children[10000];
     struct node* next;
 } node;
