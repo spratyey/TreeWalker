@@ -1,5 +1,43 @@
 #include "AdjList.h"
 //#include "Analytics.h"
+ long int __COUNT=1;  
+ double BRANCHING_F[(long int)1e6];
+ double AVERGAE_D[(long int)1e6];
+ int MAX_DEPTH[(long int)1e6];
+ int BF_SUM=0;
+ int WEIGHTED_D=0;
+
+double BranchingFactor(ptr Node)
+{
+    double average;
+    BF_SUM+=Node->number_of_children;
+    average=BF_SUM/(double)__COUNT;
+    return average;
+}
+
+int MaxDepth(ptr node, int prev)
+{
+    int temp_max = prev;
+
+    if (prev < node->depth)
+        temp_max = node->depth;
+
+    return temp_max;
+}
+
+double AvgDepth(ptr node)
+{
+    WEIGHTED_D += node->depth;
+    double average = WEIGHTED_D /(double) __COUNT;
+    return average;
+}
+
+void printAnalysis(int maxnode)
+{
+    for(int i = 0; i <= maxnode; i++)
+        printf("%d, %d, %lf, %lf\n", i+1, MAX_DEPTH[i], AVERGAE_D[i], BRANCHING_F[i]);
+}
+
 struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
     struct node *newNode = malloc(sizeof(struct node));

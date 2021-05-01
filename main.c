@@ -4,7 +4,7 @@ int main()
 {
 	int noofele;
 	scanf("%d", &noofele);
-
+	
 	//create our two main structures, the priority queue and the adjacency list
 	ptr *pq = createPQ(noofele+10);//pq capacity made much larger than noofele, can be EQUAL to noofele
 	struct node *AdjacencyListArray[noofele];
