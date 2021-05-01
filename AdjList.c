@@ -1,4 +1,5 @@
 #include "AdjList.h"
+#include "Analytics.h"
 struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
     struct node *newNode = malloc(sizeof(struct node));
@@ -98,9 +99,10 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode)
     for (i = 0; i < maxnode; i++) //maxnode is total number of nodes in tree
     {
         popped_node = pop(heap);
-        max[count] = MaxDepth(popped_node, max[count-1]);
-        avg[count] = AvgDepth(popped_node);
-        count++;
+        MAX_DEPTH[__COUNT] = MaxDepth(popped_node, MAX_DEPTH[__COUNT-1]);
+        AVERGAE_D[__COUNT] = AvgDepth(popped_node);
+        BRANCHING_F[__COUNT]=BranchingFactor(popped_node);
+        __COUNT++;
         printf("[statenum=%d,val=%d,parentnum =%d,seentime=%d]\n", popped_node->state_number + 1,popped_node->value,popped_node->parent + 1,popped_node->seen_time);
         T = AdjacencyListArray[(popped_node->state_number)];
         while (T->next != NULL)
