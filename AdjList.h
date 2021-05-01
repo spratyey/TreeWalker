@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "PriorityQueue.h"
+#include "Analytics.h"
 struct node *createNode(struct node *AdjacencyListArray[],int statenum, int val, int parentnum);
 void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode);
 void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum);

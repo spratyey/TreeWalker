@@ -1,4 +1,9 @@
-#include "Analytics.h"
+#include "AdjList.h"
+
+__COUNT=1;
+BF_SUM=0;
+MAX_DEPTH=-1;
+WEIGHTED_D=0;
 
 double BranchingFactor(ptr Node)
 {
