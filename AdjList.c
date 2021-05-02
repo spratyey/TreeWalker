@@ -152,7 +152,7 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode)
         AVERGAE_D[__COUNT] = AvgDepth(popped_node);
         BRANCHING_F[__COUNT]=BranchingFactor(popped_node,BRANCHING_F[__COUNT-1]);
         __COUNT++;
-        printf("[statenum=%d,val=%d,parentnum =%d,seentime=%d]\n", popped_node->state_number + 1,popped_node->value,popped_node->parent + 1,popped_node->seen_time);
+        printf("[statenum=%d]\n", popped_node->state_number + 1);
         T = AdjacencyListArray[(popped_node->state_number)];
         while (T->next != NULL)
         {

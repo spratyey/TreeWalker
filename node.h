@@ -39,11 +39,6 @@ typedef struct node
 
 typedef struct node* ptr;
 int node_comparator(node *a, node *b);
-/*
-void input_node(node *a)
-{
-    // inputs the information of one node. Use this in a loop to input all the nodes.
-    scanf("%d %d %d", &(a->state_number), &(a->value), &(a->parent));
-}
-*/
+void input_node(struct node *AdjacencyListArray[]);
+
 #endif

@@ -17,11 +17,7 @@ int main()
 	}
 
 	for (int i = 0; i < noofele; i++)
-	{
-		int statenum, val, parentnum;
-		scanf(" %d %d %d", &statenum, &val, &parentnum);
-		PushInAdjacencyListarray(AdjacencyListArray, statenum-1, val, parentnum-1);
-	}
+		input_node(AdjacencyListArray);
     printAdjacencyList(AdjacencyListArray,noofele);
 	pushListToPQ(AdjacencyListArray,pq,noofele);
 	printAnalysis(noofele);
