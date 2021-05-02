@@ -1,18 +1,28 @@
 #include "AdjList.h"
-//#include "Analytics.h"
- long int __COUNT=1;  
+/*Global variables required for analysis*/
+ long int __COUNT=1;
+ long int __COUNT_BF=1;  
  double BRANCHING_F[(long int)1e6];
  double AVERGAE_D[(long int)1e6];
  int MAX_DEPTH[(long int)1e6];
- int BF_SUM=0;
- int WEIGHTED_D=0;
+ long long int BF_SUM=0;
+ long long int WEIGHTED_D=0;
+/****************************************/
 
-double BranchingFactor(ptr Node)
+double BranchingFactor(ptr Node,double Prev)
 {
     double average;
-    BF_SUM+=Node->number_of_children;
-    average=BF_SUM/(double)__COUNT;
-    return average;
+    if(Node->number_of_children>0)
+    {
+        BF_SUM+=Node->number_of_children;
+        average=BF_SUM/(double) __COUNT_BF++;
+        return average;
+    }
+    else
+    {
+        return Prev;
+    }
+    
 }
 
 int MaxDepth(ptr node, int prev)
@@ -46,6 +56,7 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
     newNode->parent = parentnum;
     newNode->next = NULL;
     newNode->seen_time = 0;
+    newNode->number_of_children=0;
     if (parentnum < 0)
     {
         newNode->depth = 0;
@@ -139,7 +150,7 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode)
         popped_node = pop(heap);
         MAX_DEPTH[__COUNT] = MaxDepth(popped_node, MAX_DEPTH[__COUNT-1]);
         AVERGAE_D[__COUNT] = AvgDepth(popped_node);
-        BRANCHING_F[__COUNT]=BranchingFactor(popped_node);
+        BRANCHING_F[__COUNT]=BranchingFactor(popped_node,BRANCHING_F[__COUNT-1]);
         __COUNT++;
         printf("[statenum=%d,val=%d,parentnum =%d,seentime=%d]\n", popped_node->state_number + 1,popped_node->value,popped_node->parent + 1,popped_node->seen_time);
         T = AdjacencyListArray[(popped_node->state_number)];
