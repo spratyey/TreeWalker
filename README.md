@@ -19,8 +19,12 @@ Data Structures and Algorithms Term Project
 - Analytics
 - Optionally, A-star and MCTS algorithms  
 &nbsp;  
-## Compilation:  
-`gcc main.c node.c PriorityQueue.c AdjList.c -g -fsanitize=address -fsanitize=undefined`
-
-## Execution:  
-`./a.out < data.txt`
+## Compilation and Execution:  
+* Put data into data.txt  
+*	 `make run [searchmethod]`   
+	Here, `[searchmethod]` can be:  
+ 	- bfs    
+ 	- dfs  
+ 	- greedy  
+ 	- greedymax   
+More search methods can be arbitrarily added in the comparator method without modifying the makefile at all.

@@ -22,8 +22,9 @@
 #ifndef NODE_H
 #define NODE_H
 #include <stdio.h>
-#include<stdlib.h>
-#include<assert.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
 typedef struct node
 {
     int state_number;
@@ -38,7 +39,10 @@ typedef struct node
 } node;
 
 typedef struct node* ptr;
+extern char search_mode[10];
 int node_comparator(node *a, node *b);
+void input_node(struct node *AdjacencyListArray[]);
+
 /*
 void input_node(node *a)
 {
