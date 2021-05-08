@@ -1,6 +1,7 @@
 #include "AdjList.h"
+#include "TreeRep.h"
 
-//#include "Analytics.h"
+
 int main(int argc, char *argv[])
 {
 	strcpy(search_mode, argv[1]);
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     //printAdjacencyList(AdjacencyListArray,noofele);
 	pushListToPQ(AdjacencyListArray,pq,noofele);
 	printAnalysis(noofele);
+	printTree(AdjacencyListArray,noofele);
     deleteAdjacencyList(AdjacencyListArray, noofele);
     deletePQ(pq);
 	return 0;
