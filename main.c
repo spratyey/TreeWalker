@@ -31,10 +31,10 @@ int main(int argc, char *argv[])
 		input_node(AdjacencyListArray);
 	//AAKASH-OVER
 
-    printAdjacencyList(AdjacencyListArray,noofele);
+    	printAdjacencyList(AdjacencyListArray,noofele);
 	pushListToPQ(AdjacencyListArray,pq,noofele);
-printAnalysis(noofele);
-    // deleteAdjacencyList(AdjacencyListArray, noofele);
-    deletePQ(pq);
+	printAnalysis(noofele);
+    	deleteAdjacencyList(AdjacencyListArray, noofele);
+    	deletePQ(pq);
 	return 0;
 }
