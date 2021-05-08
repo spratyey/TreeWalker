@@ -74,7 +74,7 @@ void Analyse(ptr popped_node)
     __COUNT++;
 }
 
-struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
+/*struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
     struct node *newNode = malloc(sizeof(struct node));//Allocates memory to node
     /// Assignign values to node
@@ -82,6 +82,9 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
     newNode->value = val;
     newNode->parent = parentnum;
     newNode->next = NULL;
+     
+    
+    // You (as a developer) can add any extra information here [Will not be touched by user]
     newNode->seen_time = 0;
     newNode->number_of_children = 0;
     //
@@ -97,7 +100,7 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
     //
     //returning the node
     return newNode;
-}
+}*/
 
 // Print the graph
 void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
@@ -118,23 +121,22 @@ void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
     }
 }
 //This function pushes the input node values to the adjacency list
-void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
+void PushInAdjacencyListarray(struct node *AdjacencyListArray[],newNode)
 {   
     //Creating a node to pust at the parent index
-    struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
+    struct node *newnode = newNode//createNode(AdjacencyListArray, statenum, val, parentnum);
 
     if (parentnum >= 0)
     {
         assert(AdjacencyListArray[parentnum] != NULL);
 
-        newNode->next = AdjacencyListArray[parentnum]->next;
-        AdjacencyListArray[parentnum]->next = newNode;
+        newnode->next = AdjacencyListArray[parentnum]->next;
+        AdjacencyListArray[parentnum]->next = newnode;
     }
-    else
-        free(newNode);
+
     // Add edge from d to s
     // Creaing a node to push at state_number index
-    struct node *newThing = createNode(AdjacencyListArray, statenum, val, parentnum);
+    struct node *newThing = newNode//createNode(AdjacencyListArray, statenum, val, parentnum);
     newThing->next = AdjacencyListArray[statenum];
     AdjacencyListArray[statenum] = newThing;
     //  
