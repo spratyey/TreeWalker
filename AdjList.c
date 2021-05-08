@@ -89,7 +89,8 @@ void Analyse(ptr popped_node)
 
 struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
-    struct node *newNode = malloc(sizeof(struct node));//Allocates memory to node
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));//Allocates memory to node
+    assert(node!=NULL);
     /// Assignign values to node
     newNode->state_number = statenum;
     newNode->value = val;
@@ -135,7 +136,7 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, i
 {   
     //Creating a node to pust at the parent index
     struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
-
+  
     if (parentnum >= 0)
     {
         assert(AdjacencyListArray[parentnum] != NULL);
