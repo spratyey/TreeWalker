@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
 
     printAdjacencyList(AdjacencyListArray,noofele);
 	pushListToPQ(AdjacencyListArray,pq,noofele);
-	printAnalysis(noofele);
-    deleteAdjacencyList(AdjacencyListArray, noofele);
+printAnalysis(noofele);
+    // deleteAdjacencyList(AdjacencyListArray, noofele);
     deletePQ(pq);
 	return 0;
 }
