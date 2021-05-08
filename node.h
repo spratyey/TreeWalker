@@ -22,8 +22,9 @@
 #ifndef NODE_H
 #define NODE_H
 #include <stdio.h>
-#include<stdlib.h>
-#include<assert.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <string.h>
 typedef struct node
 {
     int state_number;
@@ -31,13 +32,17 @@ typedef struct node
     int parent;
     int seen_time;
     // You (as a developer) can add any extra information here [Will not be touched by user]
-    //int depth, seen_time, number_of_children;
+    int depth, number_of_children;
+    // Branching factor = average number of children of each node other than leaves.
     //node *children[10000];
     struct node* next;
 } node;
 
 typedef struct node* ptr;
+extern char search_mode[10];
 int node_comparator(node *a, node *b);
+void input_node(struct node *AdjacencyListArray[]);
+
 /*
 void input_node(node *a)
 {
