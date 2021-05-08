@@ -31,10 +31,8 @@ typedef struct node
     int value;
     int parent;
     int seen_time;
-    // You (as a developer) can add any extra information here [Will not be touched by user]
     int depth, number_of_children;
     // Branching factor = average number of children of each node other than leaves.
-    //node *children[10000];
     struct node* next;
 } node;
 
@@ -43,11 +41,5 @@ extern char search_mode[10];
 int node_comparator(node *a, node *b);
 void input_node(struct node *AdjacencyListArray[]);
 
-/*
-void input_node(node *a)
-{
-    // inputs the information of one node. Use this in a loop to input all the nodes.
-    scanf("%d %d %d", &(a->state_number), &(a->value), &(a->parent));
-}
-*/
+
 #endif
