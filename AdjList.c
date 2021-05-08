@@ -76,13 +76,16 @@ void Analyse(ptr popped_node)
 
 struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
-    struct node *newNode = malloc(sizeof(struct node));
+    struct node *newNode = malloc(sizeof(struct node));//Allocates memory to node
+    /// Assignign values to node
     newNode->state_number = statenum;
     newNode->value = val;
     newNode->parent = parentnum;
     newNode->next = NULL;
     newNode->seen_time = 0;
     newNode->number_of_children = 0;
+    //
+    //Initializing depth to nodes based on depth of parent
     if (parentnum < 0)
     {
         newNode->depth = 0;
@@ -91,6 +94,8 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
     {
         newNode->depth = AdjacencyListArray[parentnum]->depth + 1;
     }
+    //
+    //returning the node
     return newNode;
 }
 
@@ -100,6 +105,7 @@ void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
     int v;
     for (v = 0; v < maxnode; v++)
     {
+        //Creating a temporary node to traverse adjacency list
         struct node *temp = AdjacencyListArray[v];
         //Uncomment while debugging
         printf("\n Vertex %d\n: ", v);
@@ -111,25 +117,11 @@ void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
         printf("\n");
     }
 }
-
+//This function pushes the input node values to the adjacency list
 void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
-{
+{   
+    //Creating a node to pust at the parent index
     struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
-
-    if (parentnum >= 0)
-    {
-        AdjacencyListArray[parentnum]->number_of_children += 1;
-
-        if (parentnum > 0)
-        {
-            struct node *temp = AdjacencyListArray[AdjacencyListArray[parentnum]->parent];
-            while (temp->value != AdjacencyListArray[parentnum]->value)
-            {
-                temp = temp->next;
-            }
-            temp->number_of_children += 1;
-        }
-    }
 
     if (parentnum >= 0)
     {
@@ -141,15 +133,38 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, i
     else
         free(newNode);
     // Add edge from d to s
+    // Creaing a node to push at state_number index
     struct node *newThing = createNode(AdjacencyListArray, statenum, val, parentnum);
     newThing->next = AdjacencyListArray[statenum];
     AdjacencyListArray[statenum] = newThing;
+    //  
+    
+    //Updating the number of children as adding a new node changes no. of children
+    if (parentnum >= 0)
+    {
+        //updates the no. of children at the parentnum index
+        AdjacencyListArray[parentnum]->number_of_children += 1;
+        //
+        //Updates the no. of children at the parent value stored at parent of the parentnum index
+        if (parentnum > 0)
+        {
+            struct node *temp = AdjacencyListArray[AdjacencyListArray[parentnum]->parent];
+            while (temp->value != AdjacencyListArray[parentnum]->value)
+            {
+                temp = temp->next;
+            }
+            temp->number_of_children += 1;
+        }
+        //
+    }
 }
 
+//Deleting the Adjacency list to free memory
 void deleteAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
 {
     for (int i = 0; i < maxnode; i++)
     {
+        //Creating a temporary variable to traverse adjacency list at i'th index
         struct node *T = AdjacencyListArray[i];
         struct node *temp;
         while (T != NULL)
@@ -158,7 +173,9 @@ void deleteAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
             T = T->next;
             free(temp);
         }
+        //
     }
+    //Now looping at next index
 }
 
 void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode)
