@@ -1,4 +1,3 @@
-#importing libraries
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 import numpy as np
@@ -24,27 +23,32 @@ xmax = x[-1]
 
 # Initialise the subplot function using number of rows and columns
 figure, axis = plt.subplots(2, 2)
- 
+
+if xmax<=20:
+	axis[0, 0].locator_params(axis="x", nbins=xmax)
+	axis[0, 1].locator_params(axis="x", nbins=xmax)
+	axis[1, 0].locator_params(axis="x", nbins=xmax)
+	axis[1, 1].locator_params(axis="x", nbins=xmax)
 
 axis[0, 0].plot(x, y1)
 axis[0, 0].set_title("Max Depth")
 axis[0, 0].yaxis.set_major_formatter(FormatStrFormatter('%.3f'))  
-axis[0,0].locator_params(axis="x", nbins=xmax)
+
 
 axis[0, 1].plot(x, y2)
 axis[0, 1].set_title("Average Depth")
 axis[0, 1].yaxis.set_major_formatter(FormatStrFormatter('%.3f'))  
-axis[0, 1].locator_params(axis="x", nbins=xmax)
+
 
 axis[1, 0].plot(x, y3)
 axis[1, 0].set_title("Max Children")
 axis[1, 0].yaxis.set_major_formatter(FormatStrFormatter('%.3f'))  
-axis[1, 0].locator_params(axis="x", nbins=xmax)
+
 
 
 axis[1, 1].plot(x, y4)
 axis[1, 1].set_title("Branching Factor")
 axis[1, 1].yaxis.set_major_formatter(FormatStrFormatter('%.3f'))  
-axis[1, 1].locator_params(axis="x", nbins=xmax)
+
 
 plt.show()
