@@ -27,11 +27,11 @@
 #include <string.h>
 typedef struct node
 {
-    int state_number;
-    int value;
-    int parent;
-    int seen_time;
-    int depth, number_of_children;
+    long long state_number;
+    long long value;
+    long long parent;
+    long long seen_time;
+    long long depth, number_of_children;
     // Branching factor = average number of children of each node other than leaves.
     struct node* next;
 } node;

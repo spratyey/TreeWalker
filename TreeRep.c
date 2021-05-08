@@ -24,13 +24,17 @@ queNode *InitNode(ElementType element)
 Que InitQue()
 {
     Que Q = (Que)malloc(sizeof(Queue));
-
-    assert(Q != NULL);
+    if(!(Q != NULL)){
+        printf("ERROR:queue_not_allocated_memory:ABORTED\n\n");
+        exit(1);}
     ElementType e = 0;
 
     Q->Head = InitNode(e);
 
     Q->NumItems = 0;
+    if(!(Q->Head != NULL)){
+        printf("ERROR:queue_head_not_present:ABORTED\n\n");
+        exit(1);}
     assert(Q->Head != NULL);
 
     //TODO___
@@ -268,7 +272,10 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
     ElementType Gap = 5;
     ElementType shift, prev = 0, range;
     int incre = 2, shift_inc = 1;
-    printf("\nTREE REPRESENTATION\n");
+    printf("======================\n");
+    printf("TREE REPRESENTATION\n");
+    
+printf("======================\n");
 
     while (!IsEmpty(Q))
     {

@@ -63,7 +63,7 @@ double AvgDepth(ptr Node)
 }
 
 //Printing Analysed variables
-void printAnalysis(int maxnode)
+void printAnalysis(long long maxnode)
 {
 	FILE *fptr;
 	if ((fptr = fopen("plot.csv","w")) == NULL)
@@ -99,10 +99,12 @@ void Analyse(ptr popped_node)
 }
 
 //Creating a node for Adj List
-struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
+struct node *createNode(struct node *AdjacencyListArray[], long long statenum, long long val, long long parentnum)
 {
     struct node *newNode = (struct node *)malloc(sizeof(struct node));//Allocates memory to node
-    assert(newNode!=NULL);
+    if(!(newNode!=NULL)){
+        printf("ERROR:node_not_allocated_memory:ABORTED\n\n");
+        exit(1);}
     /// Assignign values to node
     newNode->state_number = statenum;
     newNode->value = val;
@@ -124,32 +126,34 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
 }
 
 // Print the graph
-void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
+void printAdjacencyList(struct node *AdjacencyListArray[], long long maxnode)
 {
-    int v;
+    long long v;
     for (v = 0; v < maxnode; v++)
     {
         //Creating a temporary node to traverse adjacency list
         struct node *temp = AdjacencyListArray[v];
         //Uncomment while debugging
-        printf("\n Vertex %d\n: ", v);
+        printf("\n Vertex %lld\n: ", v);
         while (temp)
         {
-            printf("[statenum=%d,val=%d,parentnum =%d,depth=%d,no.ofchildren=%d] -> ", temp->state_number, temp->value, temp->parent, temp->depth, temp->number_of_children);
+            printf("[statenum=%lld,val=%lld,parentnum =%lld,depth=%lld,no.ofchildren=%lld] -> ", temp->state_number, temp->value, temp->parent, temp->depth, temp->number_of_children);
             temp = temp->next;
         }
         printf("\n");
     }
 }
 //This function pushes the input node values to the adjacency list
-void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
+void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long statenum, long long val, long long parentnum)
 {   
     //Creating a node to pust at the parent index
     struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
   
     if (parentnum >= 0)
-    {
-        assert(AdjacencyListArray[parentnum] != NULL);
+    {   
+        if(!(AdjacencyListArray[parentnum] != NULL)){
+            printf("ERROR:parentnum_var_not_present:ABORTED");
+            exit(1);}
 
         newNode->next = AdjacencyListArray[parentnum]->next;
         AdjacencyListArray[parentnum]->next = newNode;
@@ -183,9 +187,9 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, i
 }
 
 //Deleting the Adjacency list to free memory
-void deleteAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
+void deleteAdjacencyList(struct node *AdjacencyListArray[], long long maxnode)
 {
-    for (int i = 0; i < maxnode; i++)
+    for (long long i = 0; i < maxnode; i++)
     {
         //Creating a temporary variable to traverse adjacency list at i'th index
         struct node *T = AdjacencyListArray[i];
@@ -224,11 +228,11 @@ void displayTable()
 }
 
 //interacts with priority queue and prints the output 
-void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode)
+void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, long long maxnode)
 {
     struct node *T = AdjacencyListArray[0];  //temporary node
     ptr popped_node;
-    int tstamp = 1, i;
+    long long tstamp = 1, i;
     T->seen_time = tstamp;
     tstamp++;
     push(heap, T);  //push root into PQ
@@ -239,7 +243,7 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode)
     {
         popped_node = pop(heap);  //pop from PQ
         Analyse(popped_node);
-        printf("%8d\t%8d\t%8d\n", popped_node->state_number + 1, popped_node->parent + 1, popped_node->seen_time); 
+        printf("%8lld\t%8lld\t%8lld\n", popped_node->state_number + 1, popped_node->parent + 1, popped_node->seen_time); 
         //output is right justified
         
         T = AdjacencyListArray[(popped_node->state_number)];

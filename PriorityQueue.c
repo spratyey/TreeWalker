@@ -5,7 +5,7 @@
 int __SIZE=-1,__CAP;
 
 //returns index of parent of arg
-int par(int index) 
+long long par(long long index) 
 {
 	if (index != 0)
 	return (index - 1) / 2;
@@ -14,13 +14,13 @@ int par(int index)
 }
 
 //returns index of left child of arg
-int lef(int index)
+long long lef(long long index)
 {
     return (2 * index) + 1;
 }
 
 //returns index of right child of arg
-int ri(int index)
+long long ri(long long index)
 {
     return lef(index) + 1;
 }
@@ -34,7 +34,7 @@ void swap(ptr* a, ptr* b)
 	*b = tmp;
 }
 //heapify while pushing
-void siftUp(ptr* heap, int index) 
+void siftUp(ptr* heap, long long index) 
 {
 	while(index>0 && node_comparator(heap[index], heap[par(index)])!=0)
 	{
@@ -43,11 +43,11 @@ void siftUp(ptr* heap, int index)
 	}
 }
 //heapify while popping
-void siftDown(ptr* heap,int index) 
+void siftDown(ptr* heap,long long index) 
 {
-	int maxele = index;
-    int left = lef(index);
- 	int right = ri(index);
+	long maxele = index;
+    long left = lef(index);
+ 	long right = ri(index);
     if (left <= __SIZE && node_comparator(heap[left] , heap[maxele])!=0) 
         maxele = left;   
     if (right <= __SIZE && node_comparator(heap[right] , heap[maxele])!=0) 
@@ -59,18 +59,21 @@ void siftDown(ptr* heap,int index)
     }	
 }
 //create a pq
-ptr* createPQ(int capacity) 
+ptr* createPQ(long long capacity) 
 {
 	__CAP=capacity;
 	ptr* heap = (ptr*)malloc(sizeof(ptr)*capacity);
-  	assert(heap != NULL);
-	return heap;
+	if(!(heap != NULL)){
+		printf("ERROR:heap_not_allocated_memory:ABORTED\n\n");
+		exit(1);}
 }
 
 //Adds element to PQ
 void push(ptr* heap, ptr newnode) 
 {
-	assert(__SIZE<__CAP-1);
+	if(!(__SIZE<__CAP-1)){
+		printf("ERROR:heap_capacity_less_than_0:ABORTED\n\n");
+		exit(1);}
 	
 	heap[++__SIZE]= newnode;
 	siftUp(heap,__SIZE);
@@ -100,7 +103,9 @@ int isEmpty()
 //frees malloc'd memory for heap. Note: individual nodes are not freed here as they hve been malloc'd by the adjacency list.the heap just stores pointers to those nodes. on freeing the heap, those addresses are not lost as they are still present in the adjacency list.
 void deletePQ(ptr* heap)
 {
-	assert(heap!=NULL);
+	if(!(heap!=NULL)){
+		printf("ERROR:heap_not_valid:ABORTED\n\n");
+		exit(1);}
 	__SIZE=-1;
 	free(heap);
 }

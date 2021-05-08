@@ -8,9 +8,11 @@ int main(int argc, char *argv[])
 	if(strcmp(search_mode,"ana")==0)
 		strcpy(search_mode, argv[2]);
 	
-	int noofele;
-	scanf("%d", &noofele);
-	assert(noofele >= 0);
+	long long noofele;
+	scanf("%lld", &noofele);
+	if(!(noofele > 0)){
+		printf("ERROR:number_of_inputs_must_be_greater_than_0:ABORTED\n\n");
+		exit(1);}
 
 	//create our two main structures, the priority queue and the adjacency list
 	ptr *pq = createPQ(noofele+10);
@@ -18,7 +20,7 @@ int main(int argc, char *argv[])
 	struct node *AdjacencyListArray[noofele];
 
 	//initialise adjacency list with all NULLS, then accept all nodes using the input_node method from node.c	
-	for (int i = 0; i < noofele; i++)
+	for (long long i = 0; i < noofele; i++)
 	{
 		AdjacencyListArray[i] = NULL;
 	}
