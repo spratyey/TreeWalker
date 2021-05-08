@@ -230,7 +230,7 @@ void setChar(char ch[], ElementType value, ElementType pos)
         ch[i] = Snum[j];
     }
 }
-void setCharRange(char ch[],char ch2, ElementType start, ElementType end)
+void setCharRange(char ch[], char ch2, ElementType start, ElementType end)
 {
     //char Snum[20];
     //ElementType len = toString(Snum, value);
@@ -250,9 +250,9 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
 
     Que Q = InitQue();
     ElementType size = 100;
-    ElementType strSize=200;
-    char ch1[strSize+1];
-    char ch2[strSize+1];
+    ElementType strSize = 200;
+    char ch1[strSize + 1];
+    char ch2[strSize + 1];
     Inject(Q, AdjacencyListArray[0]->state_number);
     ElementType level[maxNode];
     ElementType Xaxis[size];
@@ -263,8 +263,8 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
         ch1[i] = ' ';
         ch2[i] = ' ';
     }
-    ch1[strSize]='\0';
-    ch2[strSize]='\0';
+    ch1[strSize] = '\0';
+    ch2[strSize] = '\0';
     ElementType Gap = 5;
     ElementType shift, prev = 0, range;
     int incre = 2, shift_inc = 1;
@@ -275,7 +275,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
         Vertex v = Pop(Q);
         level[0] = 1;
         ptr tmp = AdjacencyListArray[v];
-        ptr tmp2=tmp;
+        ptr tmp2 = tmp;
         level[tmp->depth]--;
 
         if (tmp->parent < 0)
@@ -293,42 +293,75 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
             printf("\n");
             prev = 0;
             //shift =-5;
-            for (ElementType i = 0; i < 2*size; i++)
+            for (ElementType i = 0; i < 2 * size; i++)
             {
                 ch1[i] = ' ';
             }
         }
         level[tmp->depth + 1] += tmp->number_of_children;
-        range = (tmp->number_of_children) * 20 / (tmp->depth + 1);
+        range = (tmp->number_of_children) * (size / 5) / (tmp->depth + 1);
         shift = range / (-2);
         shift_inc = range / 2;
-        setCharRange(ch2,'-',Xaxis[tmp->state_number]+shift,Xaxis[tmp->state_number]-shift+1);
-        //printf("%s\n",ch);
-        while (tmp->next != NULL)
+        setCharRange(ch2, '-', Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
+
+        if (tmp2->number_of_children > 0)
         {
-            tmp = tmp->next;
-            Inject(Q, AdjacencyListArray[tmp->state_number]->state_number);
-            Xaxis[tmp->state_number] = Xaxis[tmp->parent] + shift;
-            setCharRange(ch2,'.',Xaxis[tmp->state_number],Xaxis[tmp->state_number]+1);
-            if (shift > 0)
+            ptr tmpArr[tmp2->number_of_children];
+            Vertex c = 0;
+            while (tmp->next != NULL)
             {
-                shift *= -1;
-                shift += shift_inc;
+                tmp = tmp->next;
+                Inject(Q, AdjacencyListArray[tmp->state_number]->state_number);
+                // Xaxis[tmp->state_number] = Xaxis[tmp->parent] + shift;
+                // setCharRange(ch2,'.',Xaxis[tmp->state_number],Xaxis[tmp->state_number]+1);
+                // if (shift > 0)
+                // {
+                //     shift *= -1;
+                //     shift += shift_inc;
+                // }
+                // else
+                //     shift *= -1;
+                tmpArr[c++] = tmp;
+
+                //printGap('-',Xaxis[tmp->state_number]);
             }
-            else
-                shift *= -1;
-            //printGap('-',Xaxis[tmp->state_number]);
+            c = 0;
+            Vertex k[2] = {0, tmp2->number_of_children - 1};
+            for (Vertex i = 0; i < tmp2->number_of_children; i++)
+            {
+                Xaxis[tmpArr[k[c]]->state_number] = Xaxis[tmpArr[k[c]]->parent] + shift;
+                setCharRange(ch2, '.', Xaxis[tmpArr[k[c]]->state_number], Xaxis[tmpArr[k[c]]->state_number] + 1);
+                if (c == 0)
+                {
+                    k[c]++;
+                }
+                else
+                {
+                    k[c]--;
+                }
+
+                if (shift > 0)
+                {
+                    shift *= -1;
+                    c = 0;
+                    shift += shift_inc;
+                }
+                else
+                {
+                    shift *= -1;
+                    c=1;
+                }
+            }
         }
         if (level[tmp2->depth] == 0)
         {
             printf("%s", ch2);
             printf("\n");
-            for (ElementType i = 0; i < 2*size; i++)
+            for (ElementType i = 0; i < 2 * size; i++)
             {
                 ch2[i] = ' ';
             }
         }
-
     }
     printf("\n");
     DeleteQue(&Q);
