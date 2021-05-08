@@ -28,7 +28,10 @@ int main(int argc, char *argv[])
 		input_node(AdjacencyListArray);
 
 	//print tree representation and search output table
-	printTree(AdjacencyListArray,noofele);
+	if(noofele<=100)
+	{
+		printTree(AdjacencyListArray,noofele,50);
+	}
 	pushListToPQ(AdjacencyListArray,pq,noofele);
 
 	//if analysis flag is enabled, print analysis table

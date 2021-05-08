@@ -234,27 +234,24 @@ void setChar(char ch[], ElementType value, ElementType pos)
         ch[i] = Snum[j];
     }
 }
-void setCharRange(char ch[], char ch2, ElementType start, ElementType end)
+void setCharRange(char ch[], char ch2,ElementType size,ElementType start, ElementType end)
 {
-    //char Snum[20];
-    //ElementType len = toString(Snum, value);
+    if(end>size)
+    {
+        end=size;
+    }
     for (ElementType i = start; i < end; i++)
     {
         ch[i] = ch2;
     }
 }
-// void fillChar(char ch[],ElementType size)
-// {
-//     for(ElementType i=0;i<size;i++)
-//         if(ch[])
-// }
 
-void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
+void printTree(struct node *AdjacencyListArray[], ElementType maxNode,ElementType leftShift)
 {
 
     Que Q = InitQue();
-    ElementType size = 100;
-    ElementType strSize = 200;
+    ElementType size = 10*maxNode;
+    ElementType strSize = 2*size;
     char ch1[strSize + 1];
     char ch2[strSize + 1];
     Inject(Q, AdjacencyListArray[0]->state_number);
@@ -274,8 +271,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
     int incre = 2, shift_inc = 1;
     printf("======================\n");
     printf("TREE REPRESENTATION\n");
-    
-printf("======================\n");
+    printf("======================\n");
 
     while (!IsEmpty(Q))
     {
@@ -287,29 +283,26 @@ printf("======================\n");
 
         if (tmp->parent < 0)
         {
-            Xaxis[tmp->state_number] = size / 2;
+            Xaxis[tmp->state_number] = size / 2-leftShift;
         }
-        // printGap(' ',Xaxis[tmp->state_number]-prev-1);
         setChar(ch1, v + 1, Xaxis[tmp->state_number]);
-        //printf("(%lld,%lld)", v+1,Xaxis[tmp->state_number]);
-        //Gap*=incre;
+        
         prev = Xaxis[tmp->state_number];
         if (level[tmp->depth] == 0)
         {
             printf("%s", ch1);
             printf("\n");
             prev = 0;
-            //shift =-5;
             for (ElementType i = 0; i < 2 * size; i++)
             {
                 ch1[i] = ' ';
             }
         }
         level[tmp->depth + 1] += tmp->number_of_children;
-        range = (tmp->number_of_children) * (size / 5) / (tmp->depth + 1);
+        range = (tmp->number_of_children) * (size / 8) / (tmp->depth + 1);
         shift = range / (-2);
         shift_inc = range / 2;
-        setCharRange(ch2, '-', Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
+        setCharRange(ch2, '-',strSize, Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
 
         if (tmp2->number_of_children > 0)
         {
@@ -319,25 +312,14 @@ printf("======================\n");
             {
                 tmp = tmp->next;
                 Inject(Q, AdjacencyListArray[tmp->state_number]->state_number);
-                // Xaxis[tmp->state_number] = Xaxis[tmp->parent] + shift;
-                // setCharRange(ch2,'.',Xaxis[tmp->state_number],Xaxis[tmp->state_number]+1);
-                // if (shift > 0)
-                // {
-                //     shift *= -1;
-                //     shift += shift_inc;
-                // }
-                // else
-                //     shift *= -1;
                 tmpArr[c++] = tmp;
-
-                //printGap('-',Xaxis[tmp->state_number]);
             }
             c = 0;
             Vertex k[2] = {0, tmp2->number_of_children - 1};
             for (Vertex i = 0; i < tmp2->number_of_children; i++)
             {
                 Xaxis[tmpArr[k[c]]->state_number] = Xaxis[tmpArr[k[c]]->parent] + shift;
-                setCharRange(ch2, '.', Xaxis[tmpArr[k[c]]->state_number], Xaxis[tmpArr[k[c]]->state_number] + 1);
+                setCharRange(ch2, '.',strSize, Xaxis[tmpArr[k[c]]->state_number], Xaxis[tmpArr[k[c]]->state_number] + 1);
                 if (c == 0)
                 {
                     k[c]++;
