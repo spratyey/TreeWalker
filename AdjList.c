@@ -1,4 +1,8 @@
 #include "AdjList.h"
+
+//global variable to check if no. of root nodes do not exceed 1
+bool check_root = FALSE;
+
 /*Global variables required for analysis*/
 long long int __COUNT = 1;
 long long int __COUNT_BF = 1;
@@ -102,9 +106,12 @@ void Analyse(ptr popped_node)
 struct node *createNode(struct node *AdjacencyListArray[], long long statenum, long long val, long long parentnum)
 {
     struct node *newNode = (struct node *)malloc(sizeof(struct node));//Allocates memory to node
-    if(!(newNode!=NULL)){
-        printf("ERROR:node_not_allocated_memory:ABORTED\n\n");
-        exit(1);}
+    if(!(newNode!=NULL))
+    {
+        printf("ERROR: node_not_allocated_memory: ABORTED\n\n");
+        exit(1);
+    }
+
     /// Assignign values to node
     newNode->state_number = statenum;
     newNode->value = val;
@@ -146,22 +153,33 @@ void printAdjacencyList(struct node *AdjacencyListArray[], long long maxnode)
 //This function pushes the input node values to the adjacency list
 void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long statenum, long long val, long long parentnum)
 {   
+    if(parentnum < 0 && check_root == TRUE)
+    {
+        printf("ERROR: more_than_one_root_not_possible: ABORTED\n\n");
+        exit(1);
+    }
+
     //Creating a node to pust at the parent index
     struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
   
     if (parentnum >= 0)
     {   
-        if(!(AdjacencyListArray[parentnum] != NULL)){
-            printf("ERROR:parentnum_var_not_present:ABORTED");
-            exit(1);}
+        if(!(AdjacencyListArray[parentnum] != NULL))
+        {
+            printf("ERROR: parentnum_var_not_present: ABORTED\n\n");
+            exit(1);
+        }
 
         newNode->next = AdjacencyListArray[parentnum]->next;
         AdjacencyListArray[parentnum]->next = newNode;
     }
     else
-        free(newNode);
+    {
+        free(newNode);   //newNode is not needed if node is root
+        check_root = TRUE;  
+    }
     // Add edge from d to s
-    // Creaing a node to push at state_number index
+    // Creating a node to push at state_number index
     struct node *newThing = createNode(AdjacencyListArray, statenum, val, parentnum);
     newThing->next = AdjacencyListArray[statenum];
     AdjacencyListArray[statenum] = newThing;
@@ -227,6 +245,23 @@ void displayTable()
     printf("===========================================\n");
 }
 
+//checks if the given search is valid or not
+void checkValidSearch()
+{
+    int bfs = strcmp(search_mode, "bfs");
+    int dfs = strcmp(search_mode, "dfs");
+    int greedy = strcmp(search_mode, "greedy");
+    int greedymax = strcmp(search_mode, "greedymax");
+
+    if(bfs == 0 || dfs == 0 || greedy == 0 || greedymax == 0)
+        return;
+    else    
+    {
+        printf("ERROR: invalid_search_mode: ABORTED\n\n");
+        exit(1);
+    }
+}
+
 //interacts with priority queue and prints the output 
 void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, long long maxnode)
 {
@@ -237,6 +272,7 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, long long maxnod
     tstamp++;
     push(heap, T);  //push root into PQ
 
+    checkValidSearch();
     displayTable();
 
     for (i = 0; i < maxnode; i++) //maxnode is total number of nodes in tree

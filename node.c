@@ -16,7 +16,8 @@ int node_comparator(node *a, node *b)
 void input_node(struct node *AdjacencyListArray[])
 {
     long long statenum,parentnum;
-    long long val;//change this line for different input types
-		scanf(" %lld %lld %lld", &statenum, &val, &parentnum);
-		PushInAdjacencyListarray(AdjacencyListArray, statenum-1, val, parentnum-1);
+    long long val; //change this line for different input types
+
+	scanf(" %lld %lld %lld", &statenum, &val, &parentnum);
+	PushInAdjacencyListarray(AdjacencyListArray, statenum-1, val, parentnum-1);
 }

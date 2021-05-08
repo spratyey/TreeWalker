@@ -7,12 +7,14 @@ int main(int argc, char *argv[])
 	strcpy(search_mode, argv[1]);
 	if(strcmp(search_mode,"ana")==0)
 		strcpy(search_mode, argv[2]);
-	
-	long long noofele;
+
+	long long noofele;  //no. of elements
 	scanf("%lld", &noofele);
-	if(!(noofele > 0)){
-		printf("ERROR:number_of_inputs_must_be_greater_than_0:ABORTED\n\n");
-		exit(1);}
+	if(!(noofele > 0))
+	{
+		printf("ERROR: number_of_inputs_must_be_greater_than_0: ABORTED\n\n");
+		exit(1);
+	}
 
 	//create our two main structures, the priority queue and the adjacency list
 	ptr *pq = createPQ(noofele+10);

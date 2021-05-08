@@ -15,6 +15,11 @@
 queNode *InitNode(ElementType element)
 {
     queNode *tmp = (queNode *)malloc(sizeof(queNode));
+    if (!(tmp != NULL))
+    {
+        printf("ERROR: pq_node_not_allocated_memory: ABORTED\n\n");
+        exit(1);
+    }
     tmp->E = element;
     tmp->Next = NULL;
     tmp->Prev = NULL;
@@ -26,7 +31,7 @@ Que InitQue()
     Que Q = (Que)malloc(sizeof(Queue));
     if (!(Q != NULL))
     {
-        printf("ERROR:queue_not_allocated_memory:ABORTED\n\n");
+        printf("ERROR: queue_not_allocated_memory: ABORTED\n\n");
         exit(1);
     }
     ElementType e = 0;
@@ -36,7 +41,7 @@ Que InitQue()
     Q->NumItems = 0;
     if (!(Q->Head != NULL))
     {
-        printf("ERROR:queue_head_not_present:ABORTED\n\n");
+        printf("ERROR: queue_head_not_present: ABORTED\n\n");
         exit(1);
     }
     assert(Q->Head != NULL);

@@ -63,17 +63,21 @@ ptr* createPQ(long long capacity)
 {
 	__CAP=capacity;
 	ptr* heap = (ptr*)malloc(sizeof(ptr)*capacity);
-	if(!(heap != NULL)){
-		printf("ERROR:heap_not_allocated_memory:ABORTED\n\n");
-		exit(1);}
+	if(!(heap != NULL))
+	{
+		printf("ERROR: heap_not_allocated_memory: ABORTED\n\n");
+		exit(1);
+	}
 }
 
 //Adds element to PQ
 void push(ptr* heap, ptr newnode) 
 {
-	if(!(__SIZE<__CAP-1)){
-		printf("ERROR:heap_capacity_less_than_0:ABORTED\n\n");
-		exit(1);}
+	if(!(__SIZE<__CAP-1))
+	{
+		printf("ERROR: heap_capacity_less_than_0: ABORTED\n\n");
+		exit(1);
+	}
 	
 	heap[++__SIZE]= newnode;
 	siftUp(heap,__SIZE);
@@ -103,9 +107,11 @@ int isEmpty()
 //frees malloc'd memory for heap. Note: individual nodes are not freed here as they hve been malloc'd by the adjacency list.the heap just stores pointers to those nodes. on freeing the heap, those addresses are not lost as they are still present in the adjacency list.
 void deletePQ(ptr* heap)
 {
-	if(!(heap!=NULL)){
-		printf("ERROR:heap_not_valid:ABORTED\n\n");
-		exit(1);}
+	if(!(heap!=NULL))
+	{
+		printf("ERROR: heap_not_valid: ABORTED\n\n");
+		exit(1);
+	}
 	__SIZE=-1;
 	free(heap);
 }
