@@ -13,5 +13,6 @@ struct node *createNode(struct node *AdjacencyListArray[],int statenum, int val,
 void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode);
 void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum);
 void deleteAdjacencyList(struct node *AdjacencyListArray[], int maxnode);
+void displayTable();
 void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode);
 #endif

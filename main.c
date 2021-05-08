@@ -18,23 +18,15 @@ int main(int argc, char *argv[])
 		AdjacencyListArray[i] = NULL;
 	}
 
-	/*MAIN
-	for (int i = 0; i < noofele; i++)
-	{
-		int statenum, val, parentnum;
-		scanf(" %d %d %d", &statenum, &val, &parentnum);
-		PushInAdjacencyListarray(AdjacencyListArray, statenum-1, val, parentnum-1);
-	}
-	*/
 	//AAKASH:
 	for (int i = 0; i < noofele; i++)
 		input_node(AdjacencyListArray);
 	//AAKASH-OVER
 
-    	printAdjacencyList(AdjacencyListArray,noofele);
+    //printAdjacencyList(AdjacencyListArray,noofele);
 	pushListToPQ(AdjacencyListArray,pq,noofele);
 	printAnalysis(noofele);
-    	deleteAdjacencyList(AdjacencyListArray, noofele);
-    	deletePQ(pq);
+    deleteAdjacencyList(AdjacencyListArray, noofele);
+    deletePQ(pq);
 	return 0;
 }
