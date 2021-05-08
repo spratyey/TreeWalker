@@ -50,5 +50,5 @@ void ClearQue(Que Q);
 void DeleteQue(Que* Q);
 void printGap(char ch,ElementType dist);
 
-void printTree(struct node *AdjacencyListArray[],ElementType maxNode,ElementType leftShift);
+void printTree(struct node *AdjacencyListArray[],ElementType maxNode);
 #endif

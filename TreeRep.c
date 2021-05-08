@@ -24,17 +24,21 @@ queNode *InitNode(ElementType element)
 Que InitQue()
 {
     Que Q = (Que)malloc(sizeof(Queue));
-    if(!(Q != NULL)){
+    if (!(Q != NULL))
+    {
         printf("ERROR:queue_not_allocated_memory:ABORTED\n\n");
-        exit(1);}
+        exit(1);
+    }
     ElementType e = 0;
 
     Q->Head = InitNode(e);
 
     Q->NumItems = 0;
-    if(!(Q->Head != NULL)){
+    if (!(Q->Head != NULL))
+    {
         printf("ERROR:queue_head_not_present:ABORTED\n\n");
-        exit(1);}
+        exit(1);
+    }
     assert(Q->Head != NULL);
 
     //TODO___
@@ -234,11 +238,11 @@ void setChar(char ch[], ElementType value, ElementType pos)
         ch[i] = Snum[j];
     }
 }
-void setCharRange(char ch[], char ch2,ElementType size,ElementType start, ElementType end)
+void setCharRange(char ch[], char ch2, ElementType size, ElementType start, ElementType end)
 {
-    if(end>size)
+    if (end > size)
     {
-        end=size;
+        end = size;
     }
     for (ElementType i = start; i < end; i++)
     {
@@ -246,12 +250,12 @@ void setCharRange(char ch[], char ch2,ElementType size,ElementType start, Elemen
     }
 }
 
-void printTree(struct node *AdjacencyListArray[], ElementType maxNode,ElementType leftShift)
+void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
 {
 
     Que Q = InitQue();
-    ElementType size = 10*maxNode;
-    ElementType strSize = 2*size;
+    ElementType size = 10 * maxNode;
+    ElementType strSize = 2 * size;
     char ch1[strSize + 1];
     char ch2[strSize + 1];
     Inject(Q, AdjacencyListArray[0]->state_number);
@@ -283,10 +287,10 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode,ElementTyp
 
         if (tmp->parent < 0)
         {
-            Xaxis[tmp->state_number] = size / 2-leftShift;
+            Xaxis[tmp->state_number] = size / 2;
         }
         setChar(ch1, v + 1, Xaxis[tmp->state_number]);
-        
+
         prev = Xaxis[tmp->state_number];
         if (level[tmp->depth] == 0)
         {
@@ -302,7 +306,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode,ElementTyp
         range = (tmp->number_of_children) * (size / 8) / (tmp->depth + 1);
         shift = range / (-2);
         shift_inc = range / 2;
-        setCharRange(ch2, '-',strSize, Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
+        setCharRange(ch2, '-', strSize, Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
 
         if (tmp2->number_of_children > 0)
         {
@@ -319,7 +323,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode,ElementTyp
             for (Vertex i = 0; i < tmp2->number_of_children; i++)
             {
                 Xaxis[tmpArr[k[c]]->state_number] = Xaxis[tmpArr[k[c]]->parent] + shift;
-                setCharRange(ch2, '.',strSize, Xaxis[tmpArr[k[c]]->state_number], Xaxis[tmpArr[k[c]]->state_number] + 1);
+                setCharRange(ch2, '.', strSize, Xaxis[tmpArr[k[c]]->state_number], Xaxis[tmpArr[k[c]]->state_number] + 1);
                 if (c == 0)
                 {
                     k[c]++;
@@ -338,7 +342,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode,ElementTyp
                 else
                 {
                     shift *= -1;
-                    c=1;
+                    c = 1;
                 }
             }
         }

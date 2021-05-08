@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
 		input_node(AdjacencyListArray);
 
 	//print tree representation and search output table
-	if(noofele<=100)
+	if(noofele<=30)
 	{
-		printTree(AdjacencyListArray,noofele,50);
+		printTree(AdjacencyListArray,noofele);
 	}
 	pushListToPQ(AdjacencyListArray,pq,noofele);
 
