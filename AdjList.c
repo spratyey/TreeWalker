@@ -11,6 +11,19 @@ long long int BF_SUM = 0;
 long long int WEIGHTED_D = 0;
 /****************************************/
 
+#include "AdjList.h"
+/*Global variables required for analysis*/
+long long int __COUNT = 1;
+long long int __COUNT_BF = 1;
+double BRANCHING_F[(long int)1e6];
+double AVERGAE_D[(long int)1e6];
+long long int MAX_DEPTH[(long int)1e6];
+long long int MAX_CHILD[(long int)1e6];
+long long int CHILD_VISIT[(long int)1e6]={0};
+long long int BF_SUM = 0;
+long long int WEIGHTED_D = 0;
+/****************************************/
+
 double BranchingFactor(ptr Node, double prev)
 {
     double average;
@@ -74,7 +87,7 @@ void Analyse(ptr popped_node)
     __COUNT++;
 }
 
-/*struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
+struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {
     struct node *newNode = malloc(sizeof(struct node));//Allocates memory to node
     /// Assignign values to node
@@ -82,9 +95,6 @@ void Analyse(ptr popped_node)
     newNode->value = val;
     newNode->parent = parentnum;
     newNode->next = NULL;
-     
-    
-    // You (as a developer) can add any extra information here [Will not be touched by user]
     newNode->seen_time = 0;
     newNode->number_of_children = 0;
     //
@@ -100,7 +110,7 @@ void Analyse(ptr popped_node)
     //
     //returning the node
     return newNode;
-}*/
+}
 
 // Print the graph
 void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
@@ -121,22 +131,23 @@ void printAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
     }
 }
 //This function pushes the input node values to the adjacency list
-void PushInAdjacencyListarray(struct node *AdjacencyListArray[],newNode)
+void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
 {   
     //Creating a node to pust at the parent index
-    struct node *newnode = newNode//createNode(AdjacencyListArray, statenum, val, parentnum);
+    struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
 
     if (parentnum >= 0)
     {
         assert(AdjacencyListArray[parentnum] != NULL);
 
-        newnode->next = AdjacencyListArray[parentnum]->next;
-        AdjacencyListArray[parentnum]->next = newnode;
+        newNode->next = AdjacencyListArray[parentnum]->next;
+        AdjacencyListArray[parentnum]->next = newNode;
     }
-
+    else
+        free(newNode);
     // Add edge from d to s
     // Creaing a node to push at state_number index
-    struct node *newThing = newNode//createNode(AdjacencyListArray, statenum, val, parentnum);
+    struct node *newThing = createNode(AdjacencyListArray, statenum, val, parentnum);
     newThing->next = AdjacencyListArray[statenum];
     AdjacencyListArray[statenum] = newThing;
     //  
