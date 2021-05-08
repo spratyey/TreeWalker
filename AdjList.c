@@ -11,7 +11,7 @@ long long int BF_SUM = 0;
 long long int WEIGHTED_D = 0;
 /****************************************/
 
-//Calaculating and returning BF
+//Calculating and returning BF
 double BranchingFactor(ptr Node, double prev)
 {
     double average;
@@ -27,7 +27,7 @@ double BranchingFactor(ptr Node, double prev)
     }
 }
 
-//Calaculating and returning Max Children
+//Calculating and returning Max Children
 long long int MaxChildren(ptr Node, long long int prev)
 {
     long long int temp_max = prev;
@@ -43,7 +43,7 @@ long long int MaxChildren(ptr Node, long long int prev)
     return temp_max;
 }
 
-//Calaculating and returning Max Depth
+//Calculating and returning Max Depth
 long long int MaxDepth(ptr Node, long long int prev)
 {
     long long int temp_max = prev;
@@ -54,7 +54,7 @@ long long int MaxDepth(ptr Node, long long int prev)
     return temp_max;
 }
 
-//Calaculating and returning Avg Depth
+//Calculating and returning Avg Depth
 double AvgDepth(ptr Node)
 {
     WEIGHTED_D += Node->depth;
@@ -65,17 +65,24 @@ double AvgDepth(ptr Node)
 //Printing Analysed variables
 void printAnalysis(int maxnode)
 {
+	FILE *fptr;
+	if ((fptr = fopen("plot.csv","w")) == NULL)
+	{
+		printf("Error! opening file");
+		exit(1);
+	}
     printf("===================================================================\n");
     printf("ANALYSIS\n");
     printf("-------------------------------------------------------------------\n");
-    printf("Seen Time  Max Depth  Avg. Depth  Max Children  Branching Factor\n");
+    printf("Iteration  Max Depth  Avg. Depth  Max Children  Branching Factor\n");
     printf("===================================================================\n");
 
     for (long long int i = 0; i <= maxnode; i++)
     {
         printf("%9lld   %8lld  %10.2lf    %10lld\t\t%8.2lf\n", i + 1, MAX_DEPTH[i], AVERGAE_D[i], MAX_CHILD[i], BRANCHING_F[i]);
+		fprintf(fptr,"%lld,%lld,%lf,%lld,%lf\n", i+1, MAX_DEPTH[i], AVERGAE_D[i],MAX_CHILD[i], BRANCHING_F[i]);
     }
-
+	fclose(fptr);
     printf("====================================================================\n");
 }
 
@@ -103,7 +110,6 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
     newNode->next = NULL;
     newNode->seen_time = 0;
     newNode->number_of_children = 0;
-    //
     //Initializing depth to nodes based on depth of parent
     if (parentnum < 0)
     {
@@ -113,7 +119,6 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
     {
         newNode->depth = AdjacencyListArray[parentnum]->depth + 1;
     }
-    //
     //returning the node
     return newNode;
 }
@@ -174,7 +179,6 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], int statenum, i
             }
             temp->number_of_children += 1;
         }
-        //
     }
 }
 
@@ -192,7 +196,6 @@ void deleteAdjacencyList(struct node *AdjacencyListArray[], int maxnode)
             T = T->next;
             free(temp);
         }
-        //
     }
     //Now looping at next index
 }

@@ -21,7 +21,7 @@ Data Structures and Algorithms Term Project
 &nbsp;  
 ## Compilation and Execution:  
 * Put data into data.txt  
-*	 `make run [searchmethod]`   
+*	 `make run [searchmethod]` (only traversal output printed) or `make run ana [searchmethod]`(prints analysis table and plots graph)  
 	Here, `[searchmethod]` can be:  
  	- bfs    
  	- dfs  
