@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "PriorityQueue.h"
-int MaxDepth(ptr node, int prev);
+long long int MaxDepth(ptr node, long long int prev);
+long long int MaxChildren(ptr node,long long int prev);
 double AvgDepth(ptr node);
 void printAnalysis(int maxnode);
 double BranchingFactor(ptr Node,double Prev);

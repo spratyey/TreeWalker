@@ -1,51 +1,77 @@
 #include "AdjList.h"
 /*Global variables required for analysis*/
- long int __COUNT=1;
- long int __COUNT_BF=1;  
- double BRANCHING_F[(long int)1e6];
- double AVERGAE_D[(long int)1e6];
- int MAX_DEPTH[(long int)1e6];
- long long int BF_SUM=0;
- long long int WEIGHTED_D=0;
+long long int __COUNT = 1;
+long long int __COUNT_BF = 1;
+double BRANCHING_F[(long int)1e6];
+double AVERGAE_D[(long int)1e6];
+long long int MAX_DEPTH[(long int)1e6];
+long long int MAX_CHILD[(long int)1e6];
+long long int CHILD_VISIT[(long int)1e6]={0};
+long long int BF_SUM = 0;
+long long int WEIGHTED_D = 0;
 /****************************************/
 
-double BranchingFactor(ptr Node,double Prev)
+double BranchingFactor(ptr Node, double prev)
 {
     double average;
-    if(Node->number_of_children>0)
+    if (Node->number_of_children > 0)
     {
-        BF_SUM+=Node->number_of_children;
-        average=BF_SUM/(double) __COUNT_BF++;
+        BF_SUM += Node->number_of_children;
+        average = BF_SUM / (double)__COUNT_BF++;
         return average;
     }
     else
     {
-        return Prev;
+        return prev;
     }
-    
 }
-
-int MaxDepth(ptr node, int prev)
+long long int MaxChildren(ptr Node, long long int prev)
 {
-    int temp_max = prev;
+    long long int temp_max = prev;
+    long long int tmpPar=Node->parent;
 
-    if (prev < node->depth)
-        temp_max = node->depth;
+    if(tmpPar>=0)
+    {
+        CHILD_VISIT[tmpPar]++;
+        if (prev < CHILD_VISIT[tmpPar])
+            temp_max = CHILD_VISIT[tmpPar];
+    }
 
     return temp_max;
 }
 
-double AvgDepth(ptr node)
+long long int MaxDepth(ptr Node, long long int prev)
 {
-    WEIGHTED_D += node->depth;
-    double average = WEIGHTED_D /(double) __COUNT;
+    long long int temp_max = prev;
+
+    if (prev < Node->depth)
+        temp_max = Node->depth;
+
+    return temp_max;
+}
+
+double AvgDepth(ptr Node)
+{
+    WEIGHTED_D += Node->depth;
+    double average = WEIGHTED_D / (double)__COUNT;
     return average;
 }
 
 void printAnalysis(int maxnode)
 {
-    for(int i = 0; i <= maxnode; i++)
-        printf("%d, %d, %lf, %lf\n", i+1, MAX_DEPTH[i], AVERGAE_D[i], BRANCHING_F[i]);
+    for (long long int i = 0; i <= maxnode; i++)
+        printf("%lld, %lld, %lld, %lf, %lf\n", i + 1, MAX_DEPTH[i], MAX_CHILD[i], AVERGAE_D[i], BRANCHING_F[i]);
+}
+
+void Analyse(ptr popped_node)
+{
+    MAX_CHILD[0] = 0;
+    MAX_DEPTH[0] = 0;
+    MAX_DEPTH[__COUNT] = MaxDepth(popped_node, MAX_DEPTH[__COUNT - 1]);
+    AVERGAE_D[__COUNT] = AvgDepth(popped_node);
+    BRANCHING_F[__COUNT] = BranchingFactor(popped_node, BRANCHING_F[__COUNT - 1]);
+    MAX_CHILD[__COUNT] = MaxChildren(popped_node, MAX_CHILD[__COUNT - 1]);
+    __COUNT++;
 }
 
 struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val, int parentnum)
@@ -56,7 +82,7 @@ struct node *createNode(struct node *AdjacencyListArray[], int statenum, int val
     newNode->parent = parentnum;
     newNode->next = NULL;
     newNode->seen_time = 0;
-    newNode->number_of_children=0;
+    newNode->number_of_children = 0;
     if (parentnum < 0)
     {
         newNode->depth = 0;
@@ -145,14 +171,12 @@ void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, int maxnode)
     push(heap, T);
     //printf("[statenum=%d,val=%d,parentnum =%d]\n", heap[0]->state_number,heap[0]->value,heap[0]->parent);
     int i;
+
     for (i = 0; i < maxnode; i++) //maxnode is total number of nodes in tree
     {
         popped_node = pop(heap);
-        MAX_DEPTH[__COUNT] = MaxDepth(popped_node, MAX_DEPTH[__COUNT-1]);
-        AVERGAE_D[__COUNT] = AvgDepth(popped_node);
-        BRANCHING_F[__COUNT]=BranchingFactor(popped_node,BRANCHING_F[__COUNT-1]);
-        __COUNT++;
-        printf("[statenum=%d,val=%d,parentnum =%d,seentime=%d]\n", popped_node->state_number + 1,popped_node->value,popped_node->parent + 1,popped_node->seen_time);
+        Analyse(popped_node);
+        printf("[statenum=%d,val=%d,parentnum =%d,seentime=%d]\n", popped_node->state_number + 1, popped_node->value, popped_node->parent + 1, popped_node->seen_time);
         T = AdjacencyListArray[(popped_node->state_number)];
         while (T->next != NULL)
         {
