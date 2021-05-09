@@ -1,5 +1,5 @@
 #include "TSL.h"
-
+#include "node.h"
 //global variable to check if no. of root nodes do not exceed 1
 bool check_root = FALSE;
 
@@ -150,6 +150,7 @@ void printAdjacencyList(struct node *AdjacencyListArray[], long long maxnode)
         printf("\n");
     }
 }
+
 //This function pushes the input node values to the adjacency list
 void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long statenum, long long val, long long parentnum)
 {   
@@ -160,11 +161,12 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long state
     }
 
     //Creating a node to pust at the parent index
-	if(parentnum>=0&&!(AdjacencyListArray[parentnum] != NULL))
+	if(parentnum >= 0 && AdjacencyListArray[parentnum] == NULL)
 	{
 		printf("ERROR: parentnum_var_not_present: ABORTED\n\n");
 		exit(1);
 	}
+
     struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
   
     if (parentnum >= 0)
@@ -247,12 +249,15 @@ void displayTable()
 //checks if the given search is valid or not
 void checkValidSearch()
 {
-    int bfs = strcmp(search_mode, "bfs");
-    int dfs = strcmp(search_mode, "dfs");
-    int greedy = strcmp(search_mode, "greedy");
-    int greedymax = strcmp(search_mode, "greedymax");
+    bool flag = FALSE;
+    for(int i = 0; i < 10; i++)
+    {
+        flag = (strcmp(search_mode, valid_searches[i]) == 0);
+        if(flag == TRUE)
+            break;
+    }
 
-    if(bfs == 0 || dfs == 0 || greedy == 0 || greedymax == 0)
+    if(flag)
         return;
     else    
     {

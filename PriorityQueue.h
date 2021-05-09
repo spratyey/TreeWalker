@@ -1,6 +1,7 @@
 #ifndef PQ_H
 #define PQ_H
 #include "node.h"
+
 //auxillary functions
 long long parent(long long index);
 void swap(ptr *a, ptr *b);

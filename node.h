@@ -38,8 +38,9 @@ typedef struct node
 
 typedef struct node* ptr;
 extern char search_mode[10];
+extern char valid_searches[10][10];
 int node_comparator(node *a, node *b);
-void input_node(struct node *AdjacencyListArray[]);
+void input_node(struct node *AdjacencyListArray[], long long noofele);
 
 
 #endif

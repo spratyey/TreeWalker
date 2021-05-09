@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 		AdjacencyListArray[i] = NULL;
 	}
 	for (int i = 0; i < noofele; i++)
-		input_node(AdjacencyListArray);
+		input_node(AdjacencyListArray, noofele);
 
 	//print tree representation and search output table
 	if(noofele<=20)
