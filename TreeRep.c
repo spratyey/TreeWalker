@@ -212,14 +212,21 @@ ElementType toString(char Snum[], ElementType n)
     return len;
 }
 
-void setChar(char ch[], ElementType value, ElementType pos)
+int setChar(char ch[], ElementType value, ElementType pos)
 {
     char Snum[20];
+    int flag1=0;
     ElementType len = toString(Snum, value);
     for (ElementType i = pos, j = 0; j < len; i++, j++)
     {
+        if(ch[i]>='0'&&ch[i]<='9')
+        {
+            flag1=1;
+        }
         ch[i] = Snum[j];
     }
+    return flag1;
+
 }
 void setCharRange(char ch[], char ch2, ElementType size, ElementType start, ElementType end)
 {
@@ -248,6 +255,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
     Inject(Q, AdjacencyListArray[0]->state_number);
     ElementType level[maxNode];
     ElementType Xaxis[size];
+    int flag=0;
     for (ElementType i = 0; i < maxNode; i++)
         level[i] = 0;
     for (ElementType i = 0; i < strSize; i++)
@@ -276,7 +284,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
         {
             Xaxis[tmp->state_number] = size / 2;
         }
-        setChar(ch1, v + 1, Xaxis[tmp->state_number]);
+        flag=setChar(ch1, v + 1, Xaxis[tmp->state_number]);
 
         prev = Xaxis[tmp->state_number];
         if (level[tmp->depth] == 0)
@@ -327,7 +335,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
                     shift *= -1;
                     c = 0;
                     shift += shift_inc;
-                    //shift_inc=shift_inc/2;
+                    //shift_inc=(ElementType)(shift_inc*(tmpArr[i]->number_of_children+1));
                 }
                 else
                 {
@@ -345,6 +353,10 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
                 ch2[i] = ' ';
             }
         }
+    }
+    if(flag)
+    {
+        printf("ERROR: Data might have been overwritten because branching factor is large");
     }
     printf("\n");
     DeleteQue(&Q);

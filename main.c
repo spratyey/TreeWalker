@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 		input_node(AdjacencyListArray);
 
 	//print tree representation and search output table
-	if(noofele<=25)
+	if(noofele<=20)
 	{
 		printTree(AdjacencyListArray,noofele);
 	}
