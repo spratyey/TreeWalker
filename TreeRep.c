@@ -15,11 +15,6 @@
 queNode *InitNode(ElementType element)
 {
     queNode *tmp = (queNode *)malloc(sizeof(queNode));
-    if (!(tmp != NULL))
-    {
-        printf("ERROR: pq_node_not_allocated_memory: ABORTED\n\n");
-        exit(1);
-    }
     tmp->E = element;
     tmp->Next = NULL;
     tmp->Prev = NULL;
@@ -31,7 +26,7 @@ Que InitQue()
     Que Q = (Que)malloc(sizeof(Queue));
     if (!(Q != NULL))
     {
-        printf("ERROR: queue_not_allocated_memory: ABORTED\n\n");
+        printf("ERROR:queue_not_allocated_memory:ABORTED\n\n");
         exit(1);
     }
     ElementType e = 0;
@@ -41,7 +36,7 @@ Que InitQue()
     Q->NumItems = 0;
     if (!(Q->Head != NULL))
     {
-        printf("ERROR: queue_head_not_present: ABORTED\n\n");
+        printf("ERROR:queue_head_not_present:ABORTED\n\n");
         exit(1);
     }
     assert(Q->Head != NULL);
@@ -249,6 +244,10 @@ void setCharRange(char ch[], char ch2, ElementType size, ElementType start, Elem
     {
         end = size;
     }
+    if(start<0)
+    {
+        start=0;
+    }
     for (ElementType i = start; i < end; i++)
     {
         ch[i] = ch2;
@@ -282,10 +281,10 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
     printf("TREE REPRESENTATION\n");
     printf("======================\n");
 
+    level[0] = 1;
     while (!IsEmpty(Q))
     {
         Vertex v = Pop(Q);
-        level[0] = 1;
         ptr tmp = AdjacencyListArray[v];
         ptr tmp2 = tmp;
         level[tmp->depth]--;
@@ -308,19 +307,22 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
             }
         }
         level[tmp->depth + 1] += tmp->number_of_children;
-        range = (tmp->number_of_children) * (size / 8) / (tmp->depth + 1);
-        shift = range / (-2);
-        shift_inc = range / 2;
-        setCharRange(ch2, '-', strSize, Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
 
+        range = (tmp->number_of_children) * (size /4) / (tmp->depth+1);
+        shift = range / (-2);
+        //assert(Xaxis[tmp->state_number] + shift>=0);
+    
+        setCharRange(ch2, '-', strSize, Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
         if (tmp2->number_of_children > 0)
         {
+            shift_inc = range /( (tmp->number_of_children));
             ptr tmpArr[tmp2->number_of_children];
             Vertex c = 0;
             while (tmp->next != NULL)
             {
                 tmp = tmp->next;
                 Inject(Q, AdjacencyListArray[tmp->state_number]->state_number);
+                //printf("%lld\n",AdjacencyListArray[tmp->state_number]->state_number+1);
                 tmpArr[c++] = tmp;
             }
             c = 0;
@@ -338,11 +340,12 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
                     k[c]--;
                 }
 
-                if (shift > 0)
+                if (i%2!=0)
                 {
                     shift *= -1;
                     c = 0;
                     shift += shift_inc;
+                    //shift_inc=shift_inc/2;
                 }
                 else
                 {
