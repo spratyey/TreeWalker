@@ -160,16 +160,15 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long state
     }
 
     //Creating a node to pust at the parent index
+	if(parentnum>=0&&!(AdjacencyListArray[parentnum] != NULL))
+	{
+		printf("ERROR: parentnum_var_not_present: ABORTED\n\n");
+		exit(1);
+	}
     struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
   
     if (parentnum >= 0)
     {   
-        if(!(AdjacencyListArray[parentnum] != NULL))
-        {
-            printf("ERROR: parentnum_var_not_present: ABORTED\n\n");
-            exit(1);
-        }
-
         newNode->next = AdjacencyListArray[parentnum]->next;
         AdjacencyListArray[parentnum]->next = newNode;
     }
