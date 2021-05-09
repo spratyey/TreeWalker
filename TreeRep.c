@@ -304,7 +304,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
         }
         level[tmp->depth + 1] += tmp->number_of_children;               //this calculates number of children at each level
 
-        range = (tmp->number_of_children) * (size /4) / (tmp->depth+1);
+        range = (tmp->number_of_children) * (size /5) / (tmp->depth+1);
         shift = range / (-2);
         
     
