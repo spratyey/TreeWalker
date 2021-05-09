@@ -1,17 +1,5 @@
 #include "TreeRep.h"
 
-//void DFS_visit(Graph G, Vertex s, short pVisited[],short visit[]);
-
-//ElementType EnterElement(Vertex x);
-
-// ElementType EnterElement(Vertex x)
-// {
-//     ElementType e;
-//     e.x=x;
-//     //e.y=y;
-//     return e;
-// }
-
 queNode *InitNode(ElementType element)
 {
     queNode *tmp = (queNode *)malloc(sizeof(queNode));
@@ -52,9 +40,9 @@ Que InitQue()
     return Q;
 }
 
-void Inject(Que Q, ElementType E) //Need config
+void Inject(Que Q, ElementType E) 
 {
-    //assert(!IsFull(Q));
+    
 
     queNode *tmp = InitNode(E);
     if (!IsEmpty(Q))
@@ -125,7 +113,7 @@ ElementType Pop(Que Q)
     return exit;
 }
 
-void Push(Que Q, ElementType E) ///Need config
+void Push(Que Q, ElementType E)
 {
 
     queNode *tmp = InitNode(E);
@@ -154,11 +142,6 @@ int IsEmpty(const Que Q)
 {
     return (Q->NumItems == 0);
 }
-
-// int IsFull(const Que Q)
-// {
-//     return (Q->NumItems == Q->Capacity);
-// }
 
 void ClearQueue(Que Q)
 {
@@ -322,7 +305,6 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
             {
                 tmp = tmp->next;
                 Inject(Q, AdjacencyListArray[tmp->state_number]->state_number);
-                //printf("%lld\n",AdjacencyListArray[tmp->state_number]->state_number+1);
                 tmpArr[c++] = tmp;
             }
             c = 0;
