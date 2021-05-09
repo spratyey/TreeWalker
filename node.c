@@ -1,5 +1,5 @@
 #include "node.h"
-#include "AdjList.h"
+#include "TSL.h"
 char search_mode[10];
 int node_comparator(node *a, node *b)
 {

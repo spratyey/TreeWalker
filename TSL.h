@@ -1,5 +1,5 @@
-#ifndef ADJLIST_H
-#define ADJLIST_H
+#ifndef TSL_H
+#define TSL_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -21,5 +21,5 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long state
 void deleteAdjacencyList(struct node *AdjacencyListArray[], long long maxnode);
 void checkValidSearch();
 void displayTable();
-void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, long long maxnode);
+void UnifiedSearch(struct node *AdjacencyListArray[], ptr *heap, long long maxnode);
 #endif

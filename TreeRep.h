@@ -1,6 +1,6 @@
 #ifndef __REP
 #define __REP
-#include "AdjList.h"
+#include "TSL.h"
 typedef long long int ElementType;
 
 typedef ElementType Vertex;

@@ -1,4 +1,4 @@
-#include "AdjList.h"
+#include "TSL.h"
 
 //global variable to check if no. of root nodes do not exceed 1
 bool check_root = FALSE;
@@ -262,7 +262,7 @@ void checkValidSearch()
 }
 
 //interacts with priority queue and prints the output 
-void pushListToPQ(struct node *AdjacencyListArray[], ptr *heap, long long maxnode)
+void UnifiedSearch(struct node *AdjacencyListArray[], ptr *heap, long long maxnode)
 {
     struct node *T = AdjacencyListArray[0];  //temporary node
     ptr popped_node;

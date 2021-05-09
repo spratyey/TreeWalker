@@ -1,4 +1,4 @@
-#include "AdjList.h"
+#include "TSL.h"
 #include "TreeRep.h"
 
 int main(int argc, char *argv[])
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	{
 		printTree(AdjacencyListArray,noofele);
 	}
-	pushListToPQ(AdjacencyListArray,pq,noofele);
+	UnifiedSearch(AdjacencyListArray,pq,noofele);
 
 	//if analysis flag is enabled, print analysis table
 	if(strcmp(argv[1],"ana")==0)
