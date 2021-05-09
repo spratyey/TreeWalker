@@ -1,5 +1,6 @@
 #include "TreeRep.h"
 
+/*Queue implementation*/
 queNode *InitNode(ElementType element)
 {
     queNode *tmp = (queNode *)malloc(sizeof(queNode));
@@ -191,7 +192,9 @@ void printGap(char ch, ElementType dist)
         printf("%c", ch);
     }
 }
-
+/*******************************************/
+/*Print tree implementation here*/
+/*To convert number into string*/
 ElementType toString(char Snum[], ElementType n)
 {
     ElementType num = n;
@@ -211,7 +214,7 @@ ElementType toString(char Snum[], ElementType n)
     Snum[len] = '\0';
     return len;
 }
-
+/*to insert a number*/
 int setChar(char ch[], ElementType value, ElementType pos)
 {
     char Snum[20];
@@ -228,6 +231,8 @@ int setChar(char ch[], ElementType value, ElementType pos)
     return flag1;
 
 }
+/*******************************/
+/*To modify a subtring in a string*/
 void setCharRange(char ch[], char ch2, ElementType size, ElementType start, ElementType end)
 {
     if (end > size)
@@ -280,28 +285,28 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
         ptr tmp2 = tmp;
         level[tmp->depth]--;
 
-        if (tmp->parent < 0)
+        if (tmp->parent < 0)                    //this is to set the inital position of root
         {
             Xaxis[tmp->state_number] = size / 2;
-        }
+        }                       
         flag=setChar(ch1, v + 1, Xaxis[tmp->state_number]);
 
         prev = Xaxis[tmp->state_number];
-        if (level[tmp->depth] == 0)
+        if (level[tmp->depth] == 0)             //this prints the numbers
         {
             printf("%s", ch1);
             printf("\n");
             prev = 0;
-            for (ElementType i = 0; i < 2 * size; i++)
+            for (ElementType i = 0; i < strSize; i++)
             {
                 ch1[i] = ' ';
             }
         }
-        level[tmp->depth + 1] += tmp->number_of_children;
+        level[tmp->depth + 1] += tmp->number_of_children;               //this calculates number of children at each level
 
         range = (tmp->number_of_children) * (size /4) / (tmp->depth+1);
         shift = range / (-2);
-        //assert(Xaxis[tmp->state_number] + shift>=0);
+        
     
         setCharRange(ch2, '-', strSize, Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
         if (tmp2->number_of_children > 0)
@@ -335,7 +340,7 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
                     shift *= -1;
                     c = 0;
                     shift += shift_inc;
-                    //shift_inc=(ElementType)(shift_inc*(tmpArr[i]->number_of_children+1));
+                    
                 }
                 else
                 {
@@ -344,11 +349,11 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
                 }
             }
         }
-        if (level[tmp2->depth] == 0)
+        if (level[tmp2->depth] == 0)        //this is printing the branches
         {
             printf("%s", ch2);
             printf("\n");
-            for (ElementType i = 0; i < 2 * size; i++)
+            for (ElementType i = 0; i < strSize; i++)
             {
                 ch2[i] = ' ';
             }
