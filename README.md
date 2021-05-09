@@ -19,12 +19,11 @@ Data Structures and Algorithms Term Project
 - Analytics
 - Optionally, A-star and MCTS algorithms  
 &nbsp;  
-## Compilation and Execution:  
-* Put data into data.txt  
-*	 `make run [searchmethod]` (only traversal output printed) or `make run ana [searchmethod]`(prints analysis table and plots graph)  
-	Here, `[searchmethod]` can be:  
- 	- bfs    
- 	- dfs  
- 	- greedy  
- 	- greedymax   
-More search methods can be arbitrarily added in the comparator method without modifying the makefile at all.
+## Compilation and Execution:     
+*	 `make run [ana] searchmethod [D=datafilename]`  
+	Parameters enclosed in `[]` are optional  
+	- `[ana]` : if written, the analysis table is printed and the analysis graphs are plotted. Otherwise, only the search output is shown.  
+	- `searchmethod` options : `bfs | dfs | greedy | greedymax`  
+	More search methods can be arbitrarily added in the comparator method without modifying the makefile at all.  
+	- `[D=datafilename]` : If this option is not specified, the default input file is data1.txt  
+	
