@@ -1,5 +1,5 @@
 #include "TSL.h"
-#include "node.h"
+
 //global variable to check if no. of root nodes do not exceed 1
 bool check_root = FALSE;
 
@@ -150,7 +150,6 @@ void printAdjacencyList(struct node *AdjacencyListArray[], long long maxnode)
         printf("\n");
     }
 }
-
 //This function pushes the input node values to the adjacency list
 void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long statenum, long long val, long long parentnum)
 {   
@@ -161,12 +160,11 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long state
     }
 
     //Creating a node to pust at the parent index
-	if(parentnum >= 0 && AdjacencyListArray[parentnum] == NULL)
+	if(parentnum>=0&&!(AdjacencyListArray[parentnum] != NULL))
 	{
 		printf("ERROR: parentnum_var_not_present: ABORTED\n\n");
 		exit(1);
 	}
-
     struct node *newNode = createNode(AdjacencyListArray, statenum, val, parentnum);
   
     if (parentnum >= 0)
@@ -182,6 +180,11 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long state
     // Add edge from d to s
     // Creating a node to push at state_number index
     struct node *newThing = createNode(AdjacencyListArray, statenum, val, parentnum);
+    if(!(AdjacencyListArray[statenum]==NULL))
+    {
+        printf("ERROR:invalid_state_number:ABORTED\n\n");
+        exit(1);
+    }
     newThing->next = AdjacencyListArray[statenum];
     AdjacencyListArray[statenum] = newThing;
     //  
@@ -191,12 +194,11 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long state
     {
         //updates the no. of children at the parentnum index
         AdjacencyListArray[parentnum]->number_of_children += 1;
-        //
         //Updates the no. of children at the parent value stored at parent of the parentnum index
         if (parentnum > 0)
         {
             struct node *temp = AdjacencyListArray[AdjacencyListArray[parentnum]->parent];
-            while (temp->value != AdjacencyListArray[parentnum]->value)
+            while (temp->state_number != AdjacencyListArray[parentnum]->state_number)
             {
                 temp = temp->next;
             }
@@ -240,7 +242,8 @@ void displayTable()
 
 	else if(strcmp(search_mode,"greedymax")==0)
         printf("Greedy Search (greatest value first)\n");
-
+	else
+		printf("Custom Search\n");
     printf("-------------------------------------------\n");
     printf("State No.\tParent No.\tSeen Time\n");
     printf("===========================================\n");
@@ -249,15 +252,12 @@ void displayTable()
 //checks if the given search is valid or not
 void checkValidSearch()
 {
-    bool flag = FALSE;
-    for(int i = 0; i < 10; i++)
-    {
-        flag = (strcmp(search_mode, valid_searches[i]) == 0);
-        if(flag == TRUE)
-            break;
-    }
+    int bfs = strcmp(search_mode, "bfs");
+    int dfs = strcmp(search_mode, "dfs");
+    int greedy = strcmp(search_mode, "greedy");
+    int greedymax = strcmp(search_mode, "greedymax");
 
-    if(flag)
+    if(bfs == 0 || dfs == 0 || greedy == 0 || greedymax == 0)
         return;
     else    
     {

@@ -254,11 +254,15 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
 
     Que Q = InitQue();
     ElementType size = 10 * maxNode;
+    //  if(maxNode<6)
+    //  {
+    //      size=size*2;
+    //  }
     ElementType strSize = 2 * size;
     char ch1[strSize + 1];
     char ch2[strSize + 1];
     Inject(Q, AdjacencyListArray[0]->state_number);
-    ElementType level[maxNode];
+    ElementType level[maxNode*2];
     ElementType Xaxis[size];
     int flag=0;
     for (ElementType i = 0; i < maxNode; i++)
@@ -282,14 +286,14 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
     {
         Vertex v = Pop(Q);
         ptr tmp = AdjacencyListArray[v];
-        ptr tmp2 = tmp;
+        ptr tmp2 = AdjacencyListArray[v];
         level[tmp->depth]--;
 
         if (tmp->parent < 0)                    //this is to set the inital position of root
         {
-            Xaxis[tmp->state_number] = size / 2;
+            Xaxis[tmp2->state_number] = strSize / 2;
         }                       
-        flag=setChar(ch1, v + 1, Xaxis[tmp->state_number]);
+        flag=setChar(ch1, v + 1, Xaxis[tmp2->state_number]);
 
         prev = Xaxis[tmp->state_number];
         if (level[tmp->depth] == 0)             //this prints the numbers
@@ -302,29 +306,33 @@ void printTree(struct node *AdjacencyListArray[], ElementType maxNode)
                 ch1[i] = ' ';
             }
         }
-        level[tmp->depth + 1] += tmp->number_of_children;               //this calculates number of children at each level
+        level[tmp2->depth + 1] += tmp->number_of_children;               //this calculates number of children at each level
 
-        range = (tmp->number_of_children) * (size /5) / (tmp->depth+1);
+        range = (tmp2->number_of_children) * (size /5) / (tmp2->depth+1);
         shift = range / (-2);
         
     
         setCharRange(ch2, '-', strSize, Xaxis[tmp->state_number] + shift, Xaxis[tmp->state_number] - shift + 1);
         if (tmp2->number_of_children > 0)
         {
-            shift_inc = range /( (tmp->number_of_children));
+            shift_inc = range /( (tmp2->number_of_children));
             ptr tmpArr[tmp2->number_of_children];
             Vertex c = 0;
-            while (tmp->next != NULL)
+            while (tmp!=NULL&&tmp->next != NULL)
             {
                 tmp = tmp->next;
                 Inject(Q, AdjacencyListArray[tmp->state_number]->state_number);
-                tmpArr[c++] = tmp;
+                tmpArr[c++] = AdjacencyListArray[tmp->state_number];
             }
             c = 0;
             Vertex k[2] = {0, tmp2->number_of_children - 1};
             for (Vertex i = 0; i < tmp2->number_of_children; i++)
             {
-                Xaxis[tmpArr[k[c]]->state_number] = Xaxis[tmpArr[k[c]]->parent] + shift;
+                //printf("%lld\n",tmpArr[k[c]]->state_number);
+                if(tmpArr[k[c]]->parent>=0&&tmpArr[k[c]]->state_number<maxNode)
+                {    
+                    Xaxis[tmpArr[k[c]]->state_number] = Xaxis[tmpArr[k[c]]->parent] + shift;
+                }
                 setCharRange(ch2, '.', strSize, Xaxis[tmpArr[k[c]]->state_number], Xaxis[tmpArr[k[c]]->state_number] + 1);
                 if (c == 0)
                 {
