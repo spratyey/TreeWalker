@@ -160,7 +160,7 @@ void PushInAdjacencyListarray(struct node *AdjacencyListArray[], long long state
     }
 
     //Creating a node to pust at the parent index
-	if(parentnum>=0&&!(AdjacencyListArray[parentnum] != NULL))
+	if(parentnum>=0&&(AdjacencyListArray[parentnum] == NULL))
 	{
 		printf("ERROR: parentnum_var_not_present: ABORTED\n\n");
 		exit(1);
@@ -252,14 +252,17 @@ void displayTable()
 //checks if the given search is valid or not
 void checkValidSearch()
 {
-    int bfs = strcmp(search_mode, "bfs");
-    int dfs = strcmp(search_mode, "dfs");
-    int greedy = strcmp(search_mode, "greedy");
-    int greedymax = strcmp(search_mode, "greedymax");
+	bool flag = FALSE;
+    for(int i = 0; i < 10; i++)
+    {
+        flag = (strcmp(search_mode, valid_searches[i]) == 0);
+        if(flag == TRUE)
+            break;
+    }
 
-    if(bfs == 0 || dfs == 0 || greedy == 0 || greedymax == 0)
+    if(flag)
         return;
-    else    
+    else
     {
         printf("ERROR: invalid_search_mode: ABORTED\n\n");
         exit(1);
