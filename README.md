@@ -1,16 +1,7 @@
-International Institute of Information Technology, Hyderabad  
-Data Structures and Algorithms Term Project
-# Team 3 - Tree Search Library
-## Team Members  
-- Aakash Reddy, 2020102034  
-- Dhruv Mittal, 2020113017  
-- Pranav Manu, 2020112019  
-- Pratyay Suvarnapathaki, 2020111016  
-- Rohan Gupta, 2020112022  
-&nbsp;  
-## About This Project  
-This project consists of a generic tree search library with the ability to simply change the exploration strategy (and hence the search algorithm) by changing a single function in the code, i.e. the comparator.
-The program also provides several statistics about the chosen search algorithm, and also plots graphs to visually represent these statistics, facilitating potential further analysis.  
+# TreeWalker
+
+TreeWalker consists of a versatile and adaptible tree search library with the ability to simply change the exploration strategy (and hence the search algorithm) by changing a single function in the code, i.e. the comparator.
+The program also provides several statistics and metrics about the chosen search algorithm, and also automatically plots graphs to visually represent these statistics, facilitating potential further analysis.  
 
 Search algorithms implemented:  
 - Breadth-First Search (code: bfs)
@@ -52,7 +43,13 @@ Additional Features:
 - Output format  
 	- ASCII tree printed (tree not printed for n>=20)  
 	- Search traversal result printed (not printed in case the search name is invlaid)  
-	- Analysis table printed and plotted graphs shown (only if ana flag is enabled) 
+	- Analysis table printed and plotted graphs shown (only if ana flag is enabled) \
+&nbsp;  
+## Contributors 
+- Aakash Reddy 
+- Dhruv Mittal
+- Pranav Manu
+- Pratyay Suvarnapathaki
+- Rohan Gupta  
 
- 
 
